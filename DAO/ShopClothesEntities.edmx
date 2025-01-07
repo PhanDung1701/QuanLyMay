@@ -1,0 +1,1197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ManagementShopClothesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="quantity_unit" Type="int" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="note" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="phone" Type="varchar" MaxLength="11" />
+          <Property Name="address" Type="nvarchar" MaxLength="100" />
+          <Property Name="dateOfBirth" Type="date" />
+          <Property Name="image" Type="nvarchar" MaxLength="100" />
+          <Property Name="typeOfCustomerId" Type="int" />
+        </EntityType>
+        <EntityType Name="EntrySlip">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="staffId" Type="int" />
+          <Property Name="createDate" Type="date" />
+          <Property Name="supplierId" Type="int" />
+          <Property Name="isPay" Type="bit" />
+        </EntityType>
+        <EntityType Name="EntrySlipDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="entrySlipId" Type="int" />
+          <Property Name="productId" Type="int" />
+          <Property Name="price" Type="float" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="staffId" Type="int" />
+          <Property Name="createDate" Type="date" />
+          <Property Name="customerId" Type="int" />
+          <Property Name="discount" Type="int" />
+          <Property Name="isPay" Type="bit" />
+        </EntityType>
+        <EntityType Name="InvoiceDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="invoiceId" Type="int" />
+          <Property Name="productId" Type="int" />
+          <Property Name="price" Type="float" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="origin" Type="nvarchar" MaxLength="100" />
+          <Property Name="note" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="price" Type="float" />
+          <Property Name="image" Type="nvarchar" MaxLength="100" />
+          <Property Name="supplierId" Type="int" />
+          <Property Name="sizeId" Type="int" />
+          <Property Name="colorId" Type="int" />
+          <Property Name="materialId" Type="int" />
+          <Property Name="categoryId" Type="int" />
+          <Property Name="requimate" Type="int" />
+          <Property Name="remate" Type="int" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Size">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="note" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="phone" Type="varchar" MaxLength="11" />
+          <Property Name="address" Type="nvarchar" MaxLength="100" />
+          <Property Name="image" Type="nvarchar" MaxLength="100" />
+          <Property Name="dateOfBirth" Type="date" />
+          <Property Name="username" Type="varchar" MaxLength="100" />
+          <Property Name="password" Type="varchar" MaxLength="100" />
+          <Property Name="roleId" Type="int" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="address" Type="nvarchar" MaxLength="100" />
+          <Property Name="phone" Type="varchar" MaxLength="11" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TypeOfCustomer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="discount" Type="int" />
+        </EntityType>
+        <Association Name="fk_Customer_TypeOfCustomer">
+          <End Role="TypeOfCustomer" Type="Self.TypeOfCustomer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOfCustomer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="typeOfCustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_EntrySlip_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EntrySlip" Type="Self.EntrySlip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EntrySlip">
+              <PropertyRef Name="staffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_EntrySlip_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EntrySlip" Type="Self.EntrySlip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EntrySlip">
+              <PropertyRef Name="supplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntrySlipDetail_EntrySlip">
+          <End Role="EntrySlip" Type="Self.EntrySlip" Multiplicity="0..1" />
+          <End Role="EntrySlipDetail" Type="Self.EntrySlipDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EntrySlip">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EntrySlipDetail">
+              <PropertyRef Name="entrySlipId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntrySlipDetail_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EntrySlipDetail" Type="Self.EntrySlipDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EntrySlipDetail">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ID_Invoice">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="InvoiceDetail" Type="Self.InvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InvoiceDetail">
+              <PropertyRef Name="invoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ID_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="InvoiceDetail" Type="Self.InvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InvoiceDetail">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Invoice_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Invoice_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="staffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_P_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_P_Color">
+          <End Role="Color" Type="Self.Color" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="colorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_P_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="materialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_P_Size">
+          <End Role="Size" Type="Self.Size" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Size">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="sizeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_P_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="supplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Staff_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="TopCustomerBuy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="checkType" Type="bit" Mode="In" />
+          <Parameter Name="date" Type="date" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="name" Type="nvarchar" MaxLength="100" />
+                <Property Name="totalMoney" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="TopSelling" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="quantity" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="name" Type="nvarchar" MaxLength="100" />
+                <Property Name="quantity" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="TopStaffSell" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="checkType" Type="bit" Mode="In" />
+          <Parameter Name="date" Type="date" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="name" Type="nvarchar" MaxLength="100" />
+                <Property Name="totalOrder" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <EntityContainer Name="ManagementShopClothesModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EntrySlip" EntityType="Self.EntrySlip" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EntrySlipDetail" EntityType="Self.EntrySlipDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InvoiceDetail" EntityType="Self.InvoiceDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Size" EntityType="Self.Size" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeOfCustomer" EntityType="Self.TypeOfCustomer" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_Customer_TypeOfCustomer" Association="Self.fk_Customer_TypeOfCustomer">
+            <End Role="TypeOfCustomer" EntitySet="TypeOfCustomer" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_EntrySlip_Staff" Association="Self.fk_EntrySlip_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="EntrySlip" EntitySet="EntrySlip" />
+          </AssociationSet>
+          <AssociationSet Name="fk_EntrySlip_Supplier" Association="Self.fk_EntrySlip_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="EntrySlip" EntitySet="EntrySlip" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntrySlipDetail_EntrySlip" Association="Self.FK_EntrySlipDetail_EntrySlip">
+            <End Role="EntrySlip" EntitySet="EntrySlip" />
+            <End Role="EntrySlipDetail" EntitySet="EntrySlipDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntrySlipDetail_Product" Association="Self.FK_EntrySlipDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="EntrySlipDetail" EntitySet="EntrySlipDetail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ID_Invoice" Association="Self.fk_ID_Invoice">
+            <End Role="Invoice" EntitySet="Invoice" />
+            <End Role="InvoiceDetail" EntitySet="InvoiceDetail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ID_Product" Association="Self.fk_ID_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="InvoiceDetail" EntitySet="InvoiceDetail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Invoice_Customer" Association="Self.fk_Invoice_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Invoice" EntitySet="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Invoice_Staff" Association="Self.fk_Invoice_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Invoice" EntitySet="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_P_Category" Association="Self.fk_P_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="fk_P_Color" Association="Self.fk_P_Color">
+            <End Role="Color" EntitySet="Color" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="fk_P_Material" Association="Self.fk_P_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="fk_P_Size" Association="Self.fk_P_Size">
+            <End Role="Size" EntitySet="Size" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="fk_P_Supplier" Association="Self.fk_P_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Staff_Role" Association="Self.fk_Staff_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ManagementShopClothesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="quantity_unit" Type="Int32" />
+          <NavigationProperty Name="Products" Relationship="Self.fk_P_Category" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.fk_P_Color" FromRole="Color" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="typeOfCustomerId" Type="Int32" />
+          <NavigationProperty Name="TypeOfCustomer" Relationship="Self.fk_Customer_TypeOfCustomer" FromRole="Customer" ToRole="TypeOfCustomer" />
+          <NavigationProperty Name="Invoices" Relationship="Self.fk_Invoice_Customer" FromRole="Customer" ToRole="Invoice" />
+        </EntityType>
+        <EntityType Name="EntrySlip">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="staffId" Type="Int32" />
+          <Property Name="createDate" Type="DateTime" Precision="0" />
+          <Property Name="supplierId" Type="Int32" />
+          <Property Name="isPay" Type="Boolean" />
+          <NavigationProperty Name="Staff" Relationship="Self.fk_EntrySlip_Staff" FromRole="EntrySlip" ToRole="Staff" />
+          <NavigationProperty Name="Supplier" Relationship="Self.fk_EntrySlip_Supplier" FromRole="EntrySlip" ToRole="Supplier" />
+          <NavigationProperty Name="EntrySlipDetails" Relationship="Self.FK_EntrySlipDetail_EntrySlip" FromRole="EntrySlip" ToRole="EntrySlipDetail" />
+        </EntityType>
+        <EntityType Name="EntrySlipDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="entrySlipId" Type="Int32" />
+          <Property Name="productId" Type="Int32" />
+          <Property Name="price" Type="Double" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="EntrySlip" Relationship="Self.FK_EntrySlipDetail_EntrySlip" FromRole="EntrySlipDetail" ToRole="EntrySlip" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_EntrySlipDetail_Product" FromRole="EntrySlipDetail" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="staffId" Type="Int32" />
+          <Property Name="createDate" Type="DateTime" Precision="0" />
+          <Property Name="customerId" Type="Int32" />
+          <Property Name="discount" Type="Int32" />
+          <Property Name="isPay" Type="Boolean" />
+          <NavigationProperty Name="Customer" Relationship="Self.fk_Invoice_Customer" FromRole="Invoice" ToRole="Customer" />
+          <NavigationProperty Name="InvoiceDetails" Relationship="Self.fk_ID_Invoice" FromRole="Invoice" ToRole="InvoiceDetail" />
+          <NavigationProperty Name="Staff" Relationship="Self.fk_Invoice_Staff" FromRole="Invoice" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="InvoiceDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="invoiceId" Type="Int32" />
+          <Property Name="productId" Type="Int32" />
+          <Property Name="price" Type="Double" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="Invoice" Relationship="Self.fk_ID_Invoice" FromRole="InvoiceDetail" ToRole="Invoice" />
+          <NavigationProperty Name="Product" Relationship="Self.fk_ID_Product" FromRole="InvoiceDetail" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="origin" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.fk_P_Material" FromRole="Material" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Double" />
+          <Property Name="image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="supplierId" Type="Int32" />
+          <Property Name="sizeId" Type="Int32" />
+          <Property Name="colorId" Type="Int32" />
+          <Property Name="materialId" Type="Int32" />
+          <Property Name="categoryId" Type="Int32" />
+          <Property Name="requimate" Type="Int32" />
+          <Property Name="remate" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="Category" Relationship="Self.fk_P_Category" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Color" Relationship="Self.fk_P_Color" FromRole="Product" ToRole="Color" />
+          <NavigationProperty Name="EntrySlipDetails" Relationship="Self.FK_EntrySlipDetail_Product" FromRole="Product" ToRole="EntrySlipDetail" />
+          <NavigationProperty Name="InvoiceDetails" Relationship="Self.fk_ID_Product" FromRole="Product" ToRole="InvoiceDetail" />
+          <NavigationProperty Name="Material" Relationship="Self.fk_P_Material" FromRole="Product" ToRole="Material" />
+          <NavigationProperty Name="Size" Relationship="Self.fk_P_Size" FromRole="Product" ToRole="Size" />
+          <NavigationProperty Name="Supplier" Relationship="Self.fk_P_Supplier" FromRole="Product" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Staffs" Relationship="Self.fk_Staff_Role" FromRole="Role" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Size">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.fk_P_Size" FromRole="Size" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="roleId" Type="Int32" />
+          <NavigationProperty Name="EntrySlips" Relationship="Self.fk_EntrySlip_Staff" FromRole="Staff" ToRole="EntrySlip" />
+          <NavigationProperty Name="Invoices" Relationship="Self.fk_Invoice_Staff" FromRole="Staff" ToRole="Invoice" />
+          <NavigationProperty Name="Role" Relationship="Self.fk_Staff_Role" FromRole="Staff" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EntrySlips" Relationship="Self.fk_EntrySlip_Supplier" FromRole="Supplier" ToRole="EntrySlip" />
+          <NavigationProperty Name="Products" Relationship="Self.fk_P_Supplier" FromRole="Supplier" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TypeOfCustomer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="discount" Type="Int32" />
+          <NavigationProperty Name="Customers" Relationship="Self.fk_Customer_TypeOfCustomer" FromRole="TypeOfCustomer" ToRole="Customer" />
+        </EntityType>
+        <Association Name="fk_P_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_P_Color">
+          <End Role="Color" Type="Self.Color" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="colorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Customer_TypeOfCustomer">
+          <End Role="TypeOfCustomer" Type="Self.TypeOfCustomer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOfCustomer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="typeOfCustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Invoice_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_EntrySlip_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EntrySlip" Type="Self.EntrySlip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EntrySlip">
+              <PropertyRef Name="staffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_EntrySlip_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EntrySlip" Type="Self.EntrySlip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EntrySlip">
+              <PropertyRef Name="supplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntrySlipDetail_EntrySlip">
+          <End Role="EntrySlip" Type="Self.EntrySlip" Multiplicity="0..1" />
+          <End Role="EntrySlipDetail" Type="Self.EntrySlipDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EntrySlip">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EntrySlipDetail">
+              <PropertyRef Name="entrySlipId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntrySlipDetail_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EntrySlipDetail" Type="Self.EntrySlipDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EntrySlipDetail">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ID_Invoice">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="InvoiceDetail" Type="Self.InvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InvoiceDetail">
+              <PropertyRef Name="invoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Invoice_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="staffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ID_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="InvoiceDetail" Type="Self.InvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InvoiceDetail">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_P_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="materialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_P_Size">
+          <End Role="Size" Type="Self.Size" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Size">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="sizeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_P_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="supplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Staff_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ManagementShopClothesEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Colors" EntityType="Self.Color" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="EntrySlips" EntityType="Self.EntrySlip" />
+          <EntitySet Name="EntrySlipDetails" EntityType="Self.EntrySlipDetail" />
+          <EntitySet Name="Invoices" EntityType="Self.Invoice" />
+          <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetail" />
+          <EntitySet Name="Materials" EntityType="Self.Material" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Sizes" EntityType="Self.Size" />
+          <EntitySet Name="Staffs" EntityType="Self.Staff" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TypeOfCustomers" EntityType="Self.TypeOfCustomer" />
+          <AssociationSet Name="fk_P_Category" Association="Self.fk_P_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="fk_P_Color" Association="Self.fk_P_Color">
+            <End Role="Color" EntitySet="Colors" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Customer_TypeOfCustomer" Association="Self.fk_Customer_TypeOfCustomer">
+            <End Role="TypeOfCustomer" EntitySet="TypeOfCustomers" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Invoice_Customer" Association="Self.fk_Invoice_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="fk_EntrySlip_Staff" Association="Self.fk_EntrySlip_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="EntrySlip" EntitySet="EntrySlips" />
+          </AssociationSet>
+          <AssociationSet Name="fk_EntrySlip_Supplier" Association="Self.fk_EntrySlip_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="EntrySlip" EntitySet="EntrySlips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntrySlipDetail_EntrySlip" Association="Self.FK_EntrySlipDetail_EntrySlip">
+            <End Role="EntrySlip" EntitySet="EntrySlips" />
+            <End Role="EntrySlipDetail" EntitySet="EntrySlipDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntrySlipDetail_Product" Association="Self.FK_EntrySlipDetail_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="EntrySlipDetail" EntitySet="EntrySlipDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ID_Invoice" Association="Self.fk_ID_Invoice">
+            <End Role="Invoice" EntitySet="Invoices" />
+            <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Invoice_Staff" Association="Self.fk_Invoice_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ID_Product" Association="Self.fk_ID_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_P_Material" Association="Self.fk_P_Material">
+            <End Role="Material" EntitySet="Materials" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="fk_P_Size" Association="Self.fk_P_Size">
+            <End Role="Size" EntitySet="Sizes" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="fk_P_Supplier" Association="Self.fk_P_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Staff_Role" Association="Self.fk_Staff_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <FunctionImport Name="TopCustomerBuy" IsComposable="true" ReturnType="Collection(ManagementShopClothesModel.TopCustomerBuy_Result)">
+            <Parameter Name="checkType" Mode="In" Type="Boolean" />
+            <Parameter Name="date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="TopSelling" IsComposable="true" ReturnType="Collection(ManagementShopClothesModel.TopSelling_Result)">
+            <Parameter Name="quantity" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="TopStaffSell" IsComposable="true" ReturnType="Collection(ManagementShopClothesModel.TopStaffSell_Result)">
+            <Parameter Name="checkType" Mode="In" Type="Boolean" />
+            <Parameter Name="date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="TopCustomerBuy_Result">
+          <Property Type="String" Name="name" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="totalMoney" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="TopSelling_Result">
+          <Property Type="String" Name="name" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="quantity" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="TopStaffSell_Result">
+          <Property Type="String" Name="name" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="totalOrder" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ManagementShopClothesModelStoreContainer" CdmEntityContainer="ManagementShopClothesEntities1">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="quantity_unit" ColumnName="quantity_unit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Colors">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.Color">
+              <MappingFragment StoreEntitySet="Color">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="typeOfCustomerId" ColumnName="typeOfCustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EntrySlips">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.EntrySlip">
+              <MappingFragment StoreEntitySet="EntrySlip">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="staffId" ColumnName="staffId" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="supplierId" ColumnName="supplierId" />
+                <ScalarProperty Name="isPay" ColumnName="isPay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EntrySlipDetails">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.EntrySlipDetail">
+              <MappingFragment StoreEntitySet="EntrySlipDetail">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="entrySlipId" ColumnName="entrySlipId" />
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invoices">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.Invoice">
+              <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="staffId" ColumnName="staffId" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="isPay" ColumnName="isPay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InvoiceDetails">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.InvoiceDetail">
+              <MappingFragment StoreEntitySet="InvoiceDetail">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="invoiceId" ColumnName="invoiceId" />
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materials">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.Material">
+              <MappingFragment StoreEntitySet="Material">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="origin" ColumnName="origin" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="supplierId" ColumnName="supplierId" />
+                <ScalarProperty Name="sizeId" ColumnName="sizeId" />
+                <ScalarProperty Name="colorId" ColumnName="colorId" />
+                <ScalarProperty Name="materialId" ColumnName="materialId" />
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+                <ScalarProperty Name="requimate" ColumnName="requimate" />
+                <ScalarProperty Name="remate" ColumnName="remate" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sizes">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.Size">
+              <MappingFragment StoreEntitySet="Size">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeOfCustomers">
+            <EntityTypeMapping TypeName="ManagementShopClothesModel.TypeOfCustomer">
+              <MappingFragment StoreEntitySet="TypeOfCustomer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="TopCustomerBuy" FunctionName="ManagementShopClothesModel.Store.TopCustomerBuy">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ManagementShopClothesModel.TopCustomerBuy_Result">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="totalMoney" ColumnName="totalMoney" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="TopSelling" FunctionName="ManagementShopClothesModel.Store.TopSelling">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ManagementShopClothesModel.TopSelling_Result">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="TopStaffSell" FunctionName="ManagementShopClothesModel.Store.TopStaffSell">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ManagementShopClothesModel.TopStaffSell_Result">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="totalOrder" ColumnName="totalOrder" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
