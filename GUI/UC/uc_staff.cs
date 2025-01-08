@@ -433,5 +433,9 @@ namespace GUI.UC
 
         #endregion
 
+        private void gcStaff_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

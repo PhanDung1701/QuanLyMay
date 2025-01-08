@@ -21,7 +21,9 @@ namespace BUS
             DataRow dr = tb.NewRow();
             dr[0] = "Hoá đơn";
             dr[1] = db.Invoices
-                .Where(x => x.createDate.Value.Month == DateTime.Now.Month && x.createDate.Value.Year == DateTime.Now.Year)
+                .Where(x => x.createDate.HasValue &&
+                            x.createDate.Value.Month == DateTime.Now.Month &&
+                            x.createDate.Value.Year == DateTime.Now.Year)
                 .SelectMany(x => x.InvoiceDetails) // Lấy tất cả InvoiceDetails
                 .Count();
             tb.Rows.Add(dr);
@@ -29,7 +31,9 @@ namespace BUS
             dr = tb.NewRow();
             dr[0] = "Phiếu nhập";
             dr[1] = db.EntrySlips
-                .Where(x => x.createDate.Value.Month == DateTime.Now.Month && x.createDate.Value.Year == DateTime.Now.Year)
+                .Where(x => x.createDate.HasValue &&
+                            x.createDate.Value.Month == DateTime.Now.Month &&
+                            x.createDate.Value.Year == DateTime.Now.Year)
                 .SelectMany(x => x.EntrySlipDetails) // Lấy tất cả EntrySlipDetails
                 .Count();
             tb.Rows.Add(dr);
@@ -48,6 +52,7 @@ namespace BUS
         }
 
         // Load doanh thu năm hiện tại
+        // Load doanh thu năm hiện tại
         public static DataTable loadStatisticalYear()
         {
             DataTable tb = new DataTable();
@@ -57,21 +62,28 @@ namespace BUS
             DataRow dr = tb.NewRow();
             dr[0] = "Tiền thu";
             dr[1] = db.Invoices
-                     .Where(x => x.createDate.Value.Year == DateTime.Now.Year)
-                     .SelectMany(x => x.InvoiceDetails) // Lấy tất cả InvoiceDetails
-                     .Sum(x => x.price.HasValue && x.quantity.HasValue ? x.price.Value * x.quantity.Value : 0); // Tính tổng tiền
+                     .Where(x => x.createDate.HasValue &&
+                                 x.createDate.Value.Year == DateTime.Now.Year)
+                     .SelectMany(x => x.InvoiceDetails)
+                     .Select(x => (x.price ?? 0) * (x.quantity ?? 0)) // Tính giá trị từng phần tử
+                     .DefaultIfEmpty(0) // Nếu tập hợp rỗng, thay thế bằng 0
+                     .Sum(); // Tổng các giá trị
             tb.Rows.Add(dr);
 
             dr = tb.NewRow();
             dr[0] = "Tiền chi";
             dr[1] = db.EntrySlips
-                     .Where(x => x.createDate.Value.Year == DateTime.Now.Year)
+                     .Where(x => x.createDate.HasValue &&
+                                 x.createDate.Value.Year == DateTime.Now.Year)
                      .SelectMany(x => x.EntrySlipDetails)
-                     .Sum(x => x.price.HasValue && x.quantity.HasValue ? x.price.Value * x.quantity.Value : 0);
+                     .Select(x => (x.price ?? 0) * (x.quantity ?? 0))
+                     .DefaultIfEmpty(0)
+                     .Sum();
             tb.Rows.Add(dr);
 
             return tb;
         }
+
 
         // Sản phẩm sắp hết hàng <=5
         public static DataTable loadProductNotStock()
@@ -81,7 +93,7 @@ namespace BUS
             tb.Columns.Add("quantity");
 
             var list = db.Products
-                        .Where(x => x.quantity <= 5)
+                        .Where(x => x.quantity.HasValue && x.quantity <= 5)
                         .Select(x => new { x.name, x.quantity })
                         .ToList();
 
@@ -89,7 +101,7 @@ namespace BUS
             {
                 DataRow dr = tb.NewRow();
                 dr[0] = item.name;
-                dr[1] = item.quantity;
+                dr[1] = item.quantity ?? 0; // Xử lý nếu quantity là null
                 tb.Rows.Add(dr);
             }
 

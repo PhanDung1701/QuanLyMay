@@ -15,7 +15,7 @@ namespace BUS
        
         public static void GetDataGV(GridControl gv, bool isPay = true)
         {
-            ClearCache(db);
+            
             List<EntrySlip> lst;
             if (isPay)
                 lst = (from item in db.EntrySlips select item).ToList();
@@ -23,12 +23,7 @@ namespace BUS
                 lst = (from item in db.EntrySlips where item.isPay == false select item).ToList();
             gv.DataSource = Support.ToDataTable<EntrySlip>(lst);
         }
-        public static void ClearCache(this ManagementShopClothesEntities1 context)
-        {
-            const BindingFlags FLAGS = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-            var method = context.GetType().GetMethod("ClearCache", FLAGS);
-            method.Invoke(context, null);
-        }
+        
         public static int Insert(EntrySlip model)
         {
             try
