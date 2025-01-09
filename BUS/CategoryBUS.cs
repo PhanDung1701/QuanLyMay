@@ -31,7 +31,11 @@ namespace BUS
                 return 0;
             try
             {
-                db.Categories.Add(model);
+                db.Categories.Add(new Category
+                {
+                    name = model.name,
+                    quantity_unit = model.quantity_unit // Thêm trường mới
+                });
                 db.SaveChanges();
                 return 1;
             }
@@ -40,6 +44,7 @@ namespace BUS
                 return -1;
             }
         }
+
 
         public static int Update(Category model)
         {
@@ -53,6 +58,7 @@ namespace BUS
                     return -1;
 
                 modelUpdate.name = model.name;
+                modelUpdate.quantity_unit = model.quantity_unit; // Thêm trường mới
                 db.SaveChanges();
                 return 1;
             }
@@ -61,6 +67,7 @@ namespace BUS
                 return -1;
             }
         }
+
 
         public static int Delete(int id)
         {

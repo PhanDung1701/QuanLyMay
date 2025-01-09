@@ -416,14 +416,23 @@ namespace GUI.UC
         {
             string sErr = "";
             bool bVali = true;
+
             if (gvCategory.GetRowCellValue(e.RowHandle, "name").ToString().Trim() == "")
             {
                 bVali = false;
-                sErr = "Vui lòng điền tên loại quần áo.\n";
+                sErr += "Vui lòng điền tên loại quần áo.\n";
             }
+
+            if (string.IsNullOrWhiteSpace(gvCategory.GetRowCellValue(e.RowHandle, "quantity_unit")?.ToString()) ||
+                !int.TryParse(gvCategory.GetRowCellValue(e.RowHandle, "quantity_unit")?.ToString(), out _))
+            {
+                bVali = false;
+                sErr += "Vui lòng nhập số lượng (quantity_unit) hợp lệ.\n";
+            }
+
             if (bVali)
             {
-                //thêm mới
+                // Thêm mới
                 if (e.RowHandle < 0)
                 {
                     try
@@ -431,66 +440,56 @@ namespace GUI.UC
                         var model = new Category
                         {
                             name = gvCategory.GetRowCellValue(e.RowHandle, "name").ToString().Trim(),
+                            quantity_unit = int.Parse(gvCategory.GetRowCellValue(e.RowHandle, "quantity_unit").ToString().Trim()) // Thêm trường mới
                         };
                         int i = CategoryBUS.Insert(model);
-                        open = null;
                         if (i == 1)
                             XtraMessageBox.Show("Thêm thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                        else
-                        if (i == 0)
+                        else if (i == 0)
                             XtraMessageBox.Show("Trùng tên loại quần áo.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                         else
                             XtraMessageBox.Show("Có lỗi xảy ra.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                     }
                     catch (Exception ex)
                     {
-
+                        XtraMessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     CategoryBUS.GetDataGV(gcCategory);
                 }
-                //sửa 
+                // Sửa
                 else
                 {
-                    int i = -1;
                     try
                     {
                         var model = new Category
                         {
                             id = int.Parse(gvCategory.GetRowCellValue(e.RowHandle, "id").ToString().Trim()),
                             name = gvCategory.GetRowCellValue(e.RowHandle, "name").ToString().Trim(),
+                            quantity_unit = int.Parse(gvCategory.GetRowCellValue(e.RowHandle, "quantity_unit").ToString().Trim()) // Thêm trường mới
                         };
-                        i = CategoryBUS.Update(model);
-                        open = null;
+                        int i = CategoryBUS.Update(model);
+                        if (i == 1)
+                            XtraMessageBox.Show("Cập nhật thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        else if (i == 0)
+                            XtraMessageBox.Show("Trùng tên loại quần áo.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        else
+                            XtraMessageBox.Show("Có lỗi xảy ra.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-
+                        XtraMessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    if (i == -1)
-                        XtraMessageBox.Show("Có lỗi xảy ra.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    else
-                        if (i == 0)
-                        XtraMessageBox.Show("Trùng tên loại quần áo.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     CategoryBUS.GetDataGV(gcCategory);
                 }
             }
             else
             {
-
                 e.Valid = false;
-
                 XtraMessageBox.Show(sErr, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-
-
-
-
         #endregion
 
-       
+
     }
 }
