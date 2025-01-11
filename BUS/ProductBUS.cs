@@ -34,6 +34,14 @@ namespace BUS
         {
             try
             {
+                // Tính toán quantity và remate
+                var category = db.Categories.SingleOrDefault(x => x.id == model.categoryId);
+                if (category != null && category.quantity_unit.HasValue && model.requimate.HasValue)
+                {
+                    model.quantity = model.requimate / category.quantity_unit;
+                    model.remate = model.requimate % category.quantity_unit;
+                }
+
                 db.Products.Add(model);
                 db.SaveChanges();
                 return 1;
@@ -53,19 +61,25 @@ namespace BUS
                 if (modelUpdate == null)
                     return -1;
 
+                // Tính toán quantity và remate
+                var category = db.Categories.SingleOrDefault(x => x.id == model.categoryId);
+                if (category != null && category.quantity_unit.HasValue && model.requimate.HasValue)
+                {
+                    model.quantity = model.requimate / category.quantity_unit;
+                    model.remate = model.requimate % category.quantity_unit;
+                }
+
                 modelUpdate.name = model.name;
                 modelUpdate.image = model.image;
                 modelUpdate.price = model.price;
-                modelUpdate.Supplier = db.Suppliers.SingleOrDefault(x => x.id == model.supplierId);
                 modelUpdate.supplierId = model.supplierId;
-                modelUpdate.Size = db.Sizes.SingleOrDefault(x => x.id == model.sizeId);
                 modelUpdate.sizeId = model.sizeId;
-                modelUpdate.Color = db.Colors.SingleOrDefault(x => x.id == model.colorId);
                 modelUpdate.colorId = model.colorId;
-                modelUpdate.Material = db.Materials.SingleOrDefault(x => x.id == model.materialId);
                 modelUpdate.materialId = model.materialId;
-                modelUpdate.Category = db.Categories.SingleOrDefault(x => x.id == model.categoryId);
                 modelUpdate.categoryId = model.categoryId;
+                modelUpdate.requimate = model.requimate;
+                modelUpdate.quantity = model.quantity;
+                modelUpdate.remate = model.remate;
 
                 db.SaveChanges();
                 return 1;
@@ -76,6 +90,7 @@ namespace BUS
                 return -1;
             }
         }
+
 
         public static int Delete(int id)
         {

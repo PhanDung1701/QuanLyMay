@@ -62,6 +62,8 @@
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.imageProduct = new DevExpress.XtraEditors.Repository.RepositoryItemImageEdit();
             this.gridColumn19 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn10 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn11 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.xtraTabPage4 = new DevExpress.XtraTab.XtraTabPage();
             this.gcCategory = new DevExpress.XtraGrid.GridControl();
             this.gvCategory = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -281,7 +283,9 @@
             this.gridColumn8,
             this.gridColumn7,
             this.gridColumn1,
-            this.gridColumn19});
+            this.gridColumn19,
+            this.gridColumn10,
+            this.gridColumn11});
             this.gvProduct.DetailHeight = 294;
             this.gvProduct.GridControl = this.gcProduct;
             this.gvProduct.Name = "gvProduct";
@@ -300,7 +304,7 @@
             // 
             // gridColumn2
             // 
-            this.gridColumn2.Caption = "Tên quần áo";
+            this.gridColumn2.Caption = "Tên sản phẩm";
             this.gridColumn2.FieldName = "name";
             this.gridColumn2.MinWidth = 27;
             this.gridColumn2.Name = "gridColumn2";
@@ -362,6 +366,7 @@
             this.gridColumn5.FieldName = "sizeId";
             this.gridColumn5.MinWidth = 27;
             this.gridColumn5.Name = "gridColumn5";
+            this.gridColumn5.UnboundType = DevExpress.Data.UnboundColumnType.Object;
             this.gridColumn5.Visible = true;
             this.gridColumn5.VisibleIndex = 3;
             this.gridColumn5.Width = 100;
@@ -407,6 +412,7 @@
             this.gridColumn8.FieldName = "materialId";
             this.gridColumn8.MinWidth = 27;
             this.gridColumn8.Name = "gridColumn8";
+            this.gridColumn8.UnboundType = DevExpress.Data.UnboundColumnType.Object;
             this.gridColumn8.Visible = true;
             this.gridColumn8.VisibleIndex = 5;
             this.gridColumn8.Width = 100;
@@ -460,14 +466,36 @@
             // 
             // gridColumn19
             // 
-            this.gridColumn19.Caption = "Số lượng còn";
+            this.gridColumn19.Caption = "Số lượng sản phẩm";
             this.gridColumn19.FieldName = "quantity";
             this.gridColumn19.MinWidth = 27;
             this.gridColumn19.Name = "gridColumn19";
             this.gridColumn19.OptionsColumn.AllowEdit = false;
+            this.gridColumn19.OptionsColumn.ReadOnly = true;
             this.gridColumn19.Visible = true;
-            this.gridColumn19.VisibleIndex = 8;
+            this.gridColumn19.VisibleIndex = 9;
             this.gridColumn19.Width = 100;
+            // 
+            // gridColumn10
+            // 
+            this.gridColumn10.Caption = "Số lượng (mét)";
+            this.gridColumn10.FieldName = "requimate";
+            this.gridColumn10.MinWidth = 25;
+            this.gridColumn10.Name = "gridColumn10";
+            this.gridColumn10.Visible = true;
+            this.gridColumn10.VisibleIndex = 8;
+            this.gridColumn10.Width = 94;
+            // 
+            // gridColumn11
+            // 
+            this.gridColumn11.Caption = "Số chất liệu còn";
+            this.gridColumn11.FieldName = "remate";
+            this.gridColumn11.MinWidth = 25;
+            this.gridColumn11.Name = "gridColumn11";
+            this.gridColumn11.OptionsColumn.ReadOnly = true;
+            this.gridColumn11.Visible = true;
+            this.gridColumn11.VisibleIndex = 10;
+            this.gridColumn11.Width = 94;
             // 
             // xtraTabPage4
             // 
@@ -607,5 +635,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn19;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit lkMaterial;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn10;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn11;
     }
 }

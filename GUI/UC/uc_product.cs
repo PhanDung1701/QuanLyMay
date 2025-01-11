@@ -227,25 +227,26 @@ namespace GUI.UC
         //load hình ảnh
         private void gvProduct_CustomDrawCell(object sender, RowCellCustomDrawEventArgs e)
         {
-            if (e.Column.FieldName == "image")
+            if (gvProduct.GetDataRow(e.RowHandle) != null && gvProduct.GetDataRow(e.RowHandle)["image"] != null)
             {
-                try
+                string imageName = gvProduct.GetDataRow(e.RowHandle)["image"].ToString();
+                if (!string.IsNullOrEmpty(imageName))
                 {
-                    Image img = Image.FromFile("../../Images/" + gvProduct.GetDataRow(e.RowHandle)["image"].ToString());
-                    images.Images.Clear();
-                    images.Images.Add(img);
+                    try
+                    {
+                        Image img = Image.FromFile("../../Images/" + imageName);
+                        images.Images.Clear();
+                        images.Images.Add(img);
+                    }
+                    catch (Exception ex)
+                    {
+                        Image img = Image.FromFile("../../Images/loadImg.png");
+                        images.Images.Clear();
+                        images.Images.Add(img);
+                    }
+
+                    imageProduct.Images = images;
                 }
-                catch (Exception ex)
-                {
-
-                    Image img = Image.FromFile("../../Images/loadImg.png");
-                    images.Images.Clear();
-                    //    images.ImageSize = new Size(100, 100);
-
-                    images.Images.Add(img);
-                }
-
-                imageProduct.Images = images;
             }
         }
         //thêm sửa
@@ -253,81 +254,101 @@ namespace GUI.UC
         {
             string sErr = "";
             bool bVali = true;
-            if (gvProduct.GetRowCellValue(e.RowHandle, "name").ToString().Trim() == "")
+
+            // Kiểm tra các trường bắt buộc
+            if (string.IsNullOrWhiteSpace(gvProduct.GetRowCellValue(e.RowHandle, "name")?.ToString()))
             {
                 bVali = false;
-                sErr = "Vui lòng điền tên khách hàng.\n";
+                sErr = "Vui lòng điền tên sản phẩm.\n";
             }
-           
-            if (gvProduct.GetRowCellValue(e.RowHandle, "categoryId").ToString() == "")
+            if (string.IsNullOrWhiteSpace(gvProduct.GetRowCellValue(e.RowHandle, "categoryId")?.ToString()))
             {
                 bVali = false;
                 sErr += "Vui lòng chọn thể loại.\n";
             }
-            if (gvProduct.GetRowCellValue(e.RowHandle, "colorId").ToString() == "")
+            if (string.IsNullOrWhiteSpace(gvProduct.GetRowCellValue(e.RowHandle, "colorId")?.ToString()))
             {
                 bVali = false;
                 sErr += "Vui lòng chọn màu sắc.\n";
             }
-            if (gvProduct.GetRowCellValue(e.RowHandle, "sizeId").ToString() == "")
+            if (string.IsNullOrWhiteSpace(gvProduct.GetRowCellValue(e.RowHandle, "sizeId")?.ToString()))
             {
                 bVali = false;
                 sErr += "Vui lòng chọn kích cỡ.\n";
             }
-            if (gvProduct.GetRowCellValue(e.RowHandle, "materialId").ToString() == "")
+            if (string.IsNullOrWhiteSpace(gvProduct.GetRowCellValue(e.RowHandle, "materialId")?.ToString()))
             {
                 bVali = false;
                 sErr += "Vui lòng chọn chất liệu.\n";
             }
-            if (gvProduct.GetRowCellValue(e.RowHandle, "supplierId").ToString() == "")
+            if (string.IsNullOrWhiteSpace(gvProduct.GetRowCellValue(e.RowHandle, "supplierId")?.ToString()))
             {
                 bVali = false;
                 sErr += "Vui lòng chọn nhà cung cấp.\n";
             }
-
-            if (gvProduct.GetRowCellValue(e.RowHandle, "price").ToString() == "")
+            if (string.IsNullOrWhiteSpace(gvProduct.GetRowCellValue(e.RowHandle, "price")?.ToString()))
             {
                 bVali = false;
-                sErr += "Vui lòng điền giá.\n";
+                sErr += "Vui lòng điền giá sản phẩm.\n";
             }
+            if (string.IsNullOrWhiteSpace(gvProduct.GetRowCellValue(e.RowHandle, "requimate")?.ToString()))
+            {
+                bVali = false;
+                sErr += "Vui lòng nhập số lượng yêu cầu (requimate).\n";
+            }
+
+            // Xử lý khi tất cả các trường hợp hợp lệ
             if (bVali)
             {
-
-                //thêm mới
-                if (e.RowHandle < 0)
+                try
                 {
-                    try
+                    // Lấy giá trị requimate và categoryId
+                    int requimate = int.Parse(gvProduct.GetRowCellValue(e.RowHandle, "requimate").ToString().Trim());
+                    int categoryId = int.Parse(gvProduct.GetRowCellValue(e.RowHandle, "categoryId").ToString().Trim());
+
+                    // Lấy thông tin category để tính toán quantity và remate
+                    var category = CategoryBUS.FindById(categoryId);
+                    int quantity = 0;
+                    int remate = 0;
+
+                    if (category != null && category.quantity_unit.HasValue)
+                    {
+                        int quantityUnit = category.quantity_unit.Value;
+                        quantity = requimate / quantityUnit; // Tính quantity
+                        remate = requimate % quantityUnit;  // Tính remate
+                    }
+                    else
+                    {
+                        throw new Exception("Không tìm thấy thông tin đơn vị tính (quantity_unit) cho thể loại này.");
+                    }
+
+                    // Thêm mới
+                    if (e.RowHandle < 0)
                     {
                         var model = new Product
                         {
                             name = gvProduct.GetRowCellValue(e.RowHandle, "name").ToString().Trim(),
                             image = open == null || open.SafeFileName == null ? gvProduct.GetRowCellValue(e.RowHandle, "image").ToString() : open.SafeFileName,
                             price = double.Parse(gvProduct.GetRowCellValue(e.RowHandle, "price").ToString().Trim()),
-                            categoryId = int.Parse(gvProduct.GetRowCellValue(e.RowHandle, "categoryId").ToString().Trim()),
+                            categoryId = categoryId,
                             colorId = int.Parse(gvProduct.GetRowCellValue(e.RowHandle, "colorId").ToString().Trim()),
                             sizeId = int.Parse(gvProduct.GetRowCellValue(e.RowHandle, "sizeId").ToString().Trim()),
                             materialId = int.Parse(gvProduct.GetRowCellValue(e.RowHandle, "materialId").ToString().Trim()),
                             supplierId = int.Parse(gvProduct.GetRowCellValue(e.RowHandle, "supplierId").ToString().Trim()),
+                            requimate = requimate,
+                            quantity = quantity,
+                            remate = remate
                         };
                         int i = ProductBUS.Insert(model);
                         open = null;
+
                         if (i == 1)
                             XtraMessageBox.Show("Thêm thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                         else
                             XtraMessageBox.Show("Có lỗi xảy ra.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                     }
-                    catch (Exception ex)
-                    {
-
-                    }
-                    ProductBUS.GetDataGV(gcProduct);
-                }
-                //sửa 
-                else
-                {
-                    int i = -1;
-                    try
+                    // Sửa
+                    else
                     {
                         var model = new Product
                         {
@@ -335,32 +356,38 @@ namespace GUI.UC
                             name = gvProduct.GetRowCellValue(e.RowHandle, "name").ToString().Trim(),
                             image = open == null || open.SafeFileName == null ? gvProduct.GetRowCellValue(e.RowHandle, "image").ToString() : open.SafeFileName,
                             price = double.Parse(gvProduct.GetRowCellValue(e.RowHandle, "price").ToString().Trim()),
-                            categoryId = int.Parse(gvProduct.GetRowCellValue(e.RowHandle, "categoryId").ToString().Trim()),
+                            categoryId = categoryId,
                             colorId = int.Parse(gvProduct.GetRowCellValue(e.RowHandle, "colorId").ToString().Trim()),
                             sizeId = int.Parse(gvProduct.GetRowCellValue(e.RowHandle, "sizeId").ToString().Trim()),
                             materialId = int.Parse(gvProduct.GetRowCellValue(e.RowHandle, "materialId").ToString().Trim()),
                             supplierId = int.Parse(gvProduct.GetRowCellValue(e.RowHandle, "supplierId").ToString().Trim()),
+                            requimate = requimate,
+                            quantity = quantity,
+                            remate = remate
                         };
-                        i = ProductBUS.Update(model);
+                        int i = ProductBUS.Update(model);
                         open = null;
-                    }
-                    catch (Exception)
-                    {
 
+                        if (i == -1)
+                            XtraMessageBox.Show("Có lỗi xảy ra.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    if (i == -1)
-                        XtraMessageBox.Show("Có lỗi xảy ra.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // Cập nhật lại GridControl
                     ProductBUS.GetDataGV(gcProduct);
+                }
+                catch (Exception ex)
+                {
+                    e.Valid = false;
+                    XtraMessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-
                 e.Valid = false;
-
                 XtraMessageBox.Show(sErr, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         //đánh số thứ tự bảng sách
         private void gvProduct_CustomDrawRowIndicator(object sender, RowIndicatorCustomDrawEventArgs e)
         {

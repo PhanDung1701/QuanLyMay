@@ -86,5 +86,9 @@ namespace BUS
                 return -1;
             }
         }
+        public static Category FindById(int id)
+        {
+            return db.Categories.SingleOrDefault(x => x.id == id);
+        }
     }
 }
