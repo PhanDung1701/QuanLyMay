@@ -15,19 +15,19 @@ namespace BUS
         private static ManagementShopClothesEntities1 db = new ManagementShopClothesEntities1();
         public static void GetDataLk(LookUpEdit lk)
         {
-            lk.Properties.DataSource = from item in db.Customers select item;
+            lk.Properties.DataSource = db.Customers.ToList();
             lk.Properties.DisplayMember = "name";
             lk.Properties.ValueMember = "id";
         }
         public static void GetDataLk(RepositoryItemLookUpEdit lk)
         {
-            lk.DataSource = from item in db.Customers select item;
+            lk.DataSource = db.Customers.ToList();
             lk.DisplayMember = "name";
             lk.ValueMember = "id";
         }
         public static void GetDataGV(GridControl gv)
         {
-            var lst = (from item in db.Customers select item).ToList();
+            var lst = db.Customers.ToList();
             gv.DataSource = Support.ToDataTable<Customer>(lst);
         }
         public static int Insert(Customer model)

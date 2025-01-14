@@ -16,19 +16,13 @@ namespace BUS
 
         public static void GetDataLk(RepositoryItemLookUpEdit lk)
         {
-            lk.DataSource = from item in db.Materials select item;
+            lk.DataSource = db.Materials.ToList();
             lk.DisplayMember = "name";
             lk.ValueMember = "id";
         }
-        public static void GetDataLk(LookUpEdit lk)
-        {
-            lk.Properties.DataSource = from item in db.Materials select item;
-            lk.Properties.DisplayMember = "name";
-            lk.Properties.ValueMember = "id";
-        }
         public static void GetDataGV(GridControl gv)
         {
-            var lst = (from item in db.Materials select item).ToList();
+            var lst = db.Materials.ToList();
             gv.DataSource = Support.ToDataTable<Material>(lst);
         }
         public static int Insert(Material model)

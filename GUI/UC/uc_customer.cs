@@ -315,41 +315,68 @@ namespace GUI.UC
         {
             if (e.Column.FieldName == "image")
             {
-
                 try
                 {
+                    // Lấy đường dẫn ảnh từ cột dữ liệu
+                    string imagePath = gvCustomer.GetDataRow(e.RowHandle)?["image"]?.ToString();
+                    if (string.IsNullOrWhiteSpace(imagePath))
+                    {
+                        throw new FileNotFoundException("Ảnh không tồn tại.");
+                    }
 
-                    Image img = Image.FromFile("../../Images/" + gvCustomer.GetDataRow(e.RowHandle)["image"].ToString());
-                    images.Images.Clear();
-                    images.Images.Add(img);
+                    string fullPath = "../../Images/" + imagePath;
+
+                    // Kiểm tra ảnh có tồn tại không
+                    if (File.Exists(fullPath))
+                    {
+                        Image img = Image.FromFile(fullPath);
+                        images.Images.Clear();
+                        images.Images.Add(img);
+                    }
+                    else
+                    {
+                        throw new FileNotFoundException("Ảnh không tồn tại trong thư mục.");
+                    }
                 }
-                catch (Exception ex)
+                catch
                 {
-
-                    Image img = Image.FromFile("../../Images/loadImg.png");
+                    // Load ảnh mặc định nếu có lỗi
+                    Image defaultImg = Image.FromFile("../../Images/loadImg.png");
                     images.Images.Clear();
-                    //    images.ImageSize = new Size(100, 100);
-
-                    images.Images.Add(img);
+                    images.Images.Add(defaultImg);
                 }
 
+                // Gán hình ảnh vào cột
                 imageCustomer.Images = images;
             }
         }
-        //thay đổi hình ảnh khách hàng
+
+        // Thay đổi hình ảnh khách hàng
         private void imageCustomer_Click(object sender, EventArgs e)
         {
             open = new OpenFileDialog();
             if (open.ShowDialog() == DialogResult.OK)
             {
-                pictureBox1.Image = Image.FromFile(open.FileName);
-                if (!File.Exists("../../Images/" + open.SafeFileName))
-                {
-                    pictureBox1.Image.Save("../../Images/" + open.SafeFileName);
-                }
                 try
                 {
+                    // Hiển thị ảnh được chọn trong PictureBox
+                    pictureBox1.Image = Image.FromFile(open.FileName);
+
+                    // Kiểm tra và lưu ảnh nếu chưa tồn tại trong thư mục
+                    string savePath = "../../Images/" + open.SafeFileName;
+                    if (!File.Exists(savePath))
+                    {
+                        pictureBox1.Image.Save(savePath);
+                    }
+
+                    // Lấy dữ liệu khách hàng từ dòng đang chọn
                     DataRow dr = gvCustomer.GetFocusedDataRow();
+                    if (dr == null)
+                    {
+                        XtraMessageBox.Show("Dữ liệu không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     var model = new Customer
                     {
                         id = int.Parse(dr["id"].ToString().Trim()),
@@ -361,19 +388,30 @@ namespace GUI.UC
                         phone = dr["phone"].ToString().Trim(),
                         email = dr["email"].ToString().Trim(),
                     };
+
+                    // Gọi phương thức cập nhật
                     int i = CustomerBUS.Update(model);
                     if (i == 1)
+                    {
                         CustomerBUS.GetDataGV(gcCustomer);
+                        XtraMessageBox.Show("Cập nhật thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                     else
-                        XtraMessageBox.Show("Có lỗi xảy ra.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    open = null;
+                    {
+                        XtraMessageBox.Show("Có lỗi xảy ra khi cập nhật khách hàng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-
+                    XtraMessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    open = null;
                 }
             }
         }
+
         #endregion
         #region loại khách hàng
         //phím delete loại khách hàng

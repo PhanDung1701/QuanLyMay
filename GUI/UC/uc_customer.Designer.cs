@@ -52,7 +52,6 @@
             this.gridColumn7 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.imageCustomer = new DevExpress.XtraEditors.Repository.RepositoryItemImageEdit();
             this.gridColumn9 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.lkTypeOfCustomer = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
@@ -175,39 +174,44 @@
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(952, 40);
+            this.barDockControlTop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.barDockControlTop.Size = new System.Drawing.Size(846, 32);
             // 
             // barDockControlBottom
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 494);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 395);
             this.barDockControlBottom.Manager = this.barManager1;
-            this.barDockControlBottom.Size = new System.Drawing.Size(952, 0);
+            this.barDockControlBottom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.barDockControlBottom.Size = new System.Drawing.Size(846, 0);
             // 
             // barDockControlLeft
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 40);
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 32);
             this.barDockControlLeft.Manager = this.barManager1;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 454);
+            this.barDockControlLeft.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 363);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(952, 40);
+            this.barDockControlRight.Location = new System.Drawing.Point(846, 32);
             this.barDockControlRight.Manager = this.barManager1;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 454);
+            this.barDockControlRight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 363);
             // 
             // xtraTabControl1
             // 
             this.xtraTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.xtraTabControl1.Location = new System.Drawing.Point(0, 40);
+            this.xtraTabControl1.Location = new System.Drawing.Point(0, 32);
+            this.xtraTabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
-            this.xtraTabControl1.Size = new System.Drawing.Size(952, 454);
+            this.xtraTabControl1.Size = new System.Drawing.Size(846, 363);
             this.xtraTabControl1.TabIndex = 15;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
@@ -218,15 +222,17 @@
             this.xtraTabPage1.AutoScroll = true;
             this.xtraTabPage1.Controls.Add(this.pictureBox1);
             this.xtraTabPage1.Controls.Add(this.gcCustomer);
+            this.xtraTabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.xtraTabPage1.Name = "xtraTabPage1";
-            this.xtraTabPage1.Size = new System.Drawing.Size(944, 416);
+            this.xtraTabPage1.Size = new System.Drawing.Size(844, 330);
             this.xtraTabPage1.Text = "Khách hàng";
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(931, 273);
+            this.pictureBox1.Location = new System.Drawing.Point(828, 218);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(10, 11);
+            this.pictureBox1.Size = new System.Drawing.Size(9, 9);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;
@@ -234,14 +240,16 @@
             // gcCustomer
             // 
             this.gcCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gcCustomer.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gcCustomer.Location = new System.Drawing.Point(0, 0);
             this.gcCustomer.MainView = this.gvCustomer;
+            this.gcCustomer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gcCustomer.MenuManager = this.barManager1;
             this.gcCustomer.Name = "gcCustomer";
             this.gcCustomer.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.lkTypeOfCustomer,
             this.imageCustomer});
-            this.gcCustomer.Size = new System.Drawing.Size(944, 416);
+            this.gcCustomer.Size = new System.Drawing.Size(844, 330);
             this.gcCustomer.TabIndex = 11;
             this.gcCustomer.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvCustomer});
@@ -255,9 +263,8 @@
             this.gridColumn7,
             this.gridColumn4,
             this.gridColumn5,
-            this.gridColumn1,
             this.gridColumn9});
-            this.gvCustomer.DetailHeight = 368;
+            this.gvCustomer.DetailHeight = 294;
             this.gvCustomer.GridControl = this.gcCustomer;
             this.gvCustomer.Name = "gvCustomer";
             this.gvCustomer.OptionsDetail.EnableMasterViewMode = false;
@@ -277,62 +284,54 @@
             // 
             this.gridColumn2.Caption = "Tên khách hàng";
             this.gridColumn2.FieldName = "name";
-            this.gridColumn2.MinWidth = 30;
+            this.gridColumn2.MinWidth = 27;
             this.gridColumn2.Name = "gridColumn2";
             this.gridColumn2.UnboundType = DevExpress.Data.UnboundColumnType.Object;
             this.gridColumn2.Visible = true;
             this.gridColumn2.VisibleIndex = 0;
+            this.gridColumn2.Width = 67;
             // 
             // gridColumn6
             // 
             this.gridColumn6.Caption = "Ngày sinh";
             this.gridColumn6.FieldName = "dateOfBirth";
-            this.gridColumn6.MinWidth = 30;
+            this.gridColumn6.MinWidth = 27;
             this.gridColumn6.Name = "gridColumn6";
             this.gridColumn6.UnboundType = DevExpress.Data.UnboundColumnType.Object;
             this.gridColumn6.Visible = true;
             this.gridColumn6.VisibleIndex = 1;
+            this.gridColumn6.Width = 67;
             // 
             // gridColumn7
             // 
             this.gridColumn7.Caption = "Email";
             this.gridColumn7.FieldName = "email";
-            this.gridColumn7.MinWidth = 30;
+            this.gridColumn7.MinWidth = 27;
             this.gridColumn7.Name = "gridColumn7";
             this.gridColumn7.Visible = true;
             this.gridColumn7.VisibleIndex = 2;
-            this.gridColumn7.Width = 112;
+            this.gridColumn7.Width = 100;
             // 
             // gridColumn4
             // 
             this.gridColumn4.Caption = "Số điện thoại";
             this.gridColumn4.FieldName = "phone";
-            this.gridColumn4.MinWidth = 30;
+            this.gridColumn4.MinWidth = 27;
             this.gridColumn4.Name = "gridColumn4";
             this.gridColumn4.UnboundType = DevExpress.Data.UnboundColumnType.Object;
             this.gridColumn4.Visible = true;
             this.gridColumn4.VisibleIndex = 3;
+            this.gridColumn4.Width = 67;
             // 
             // gridColumn5
             // 
             this.gridColumn5.Caption = "Địa chỉ";
             this.gridColumn5.FieldName = "address";
-            this.gridColumn5.MinWidth = 30;
+            this.gridColumn5.MinWidth = 27;
             this.gridColumn5.Name = "gridColumn5";
             this.gridColumn5.Visible = true;
             this.gridColumn5.VisibleIndex = 4;
-            this.gridColumn5.Width = 112;
-            // 
-            // gridColumn1
-            // 
-            this.gridColumn1.Caption = "Hình ảnh";
-            this.gridColumn1.ColumnEdit = this.imageCustomer;
-            this.gridColumn1.FieldName = "image";
-            this.gridColumn1.MinWidth = 30;
-            this.gridColumn1.Name = "gridColumn1";
-            this.gridColumn1.Visible = true;
-            this.gridColumn1.VisibleIndex = 5;
-            this.gridColumn1.Width = 112;
+            this.gridColumn5.Width = 100;
             // 
             // imageCustomer
             // 
@@ -354,11 +353,12 @@
             this.gridColumn9.Caption = "Loại khách hàng";
             this.gridColumn9.ColumnEdit = this.lkTypeOfCustomer;
             this.gridColumn9.FieldName = "typeOfCustomerId";
-            this.gridColumn9.MinWidth = 30;
+            this.gridColumn9.MinWidth = 27;
             this.gridColumn9.Name = "gridColumn9";
             this.gridColumn9.UnboundType = DevExpress.Data.UnboundColumnType.Object;
             this.gridColumn9.Visible = true;
-            this.gridColumn9.VisibleIndex = 6;
+            this.gridColumn9.VisibleIndex = 5;
+            this.gridColumn9.Width = 67;
             // 
             // lkTypeOfCustomer
             // 
@@ -374,18 +374,21 @@
             // xtraTabPage2
             // 
             this.xtraTabPage2.Controls.Add(this.gcTypeOfCustomer);
+            this.xtraTabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.xtraTabPage2.Name = "xtraTabPage2";
-            this.xtraTabPage2.Size = new System.Drawing.Size(944, 416);
+            this.xtraTabPage2.Size = new System.Drawing.Size(844, 330);
             this.xtraTabPage2.Text = "Loại khách hàng";
             // 
             // gcTypeOfCustomer
             // 
             this.gcTypeOfCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gcTypeOfCustomer.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gcTypeOfCustomer.Location = new System.Drawing.Point(0, 0);
             this.gcTypeOfCustomer.MainView = this.gvTypeOfCustomer;
+            this.gcTypeOfCustomer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gcTypeOfCustomer.MenuManager = this.barManager1;
             this.gcTypeOfCustomer.Name = "gcTypeOfCustomer";
-            this.gcTypeOfCustomer.Size = new System.Drawing.Size(944, 416);
+            this.gcTypeOfCustomer.Size = new System.Drawing.Size(844, 330);
             this.gcTypeOfCustomer.TabIndex = 0;
             this.gcTypeOfCustomer.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvTypeOfCustomer});
@@ -396,7 +399,7 @@
             this.gvTypeOfCustomer.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gridColumn11,
             this.gridColumn3});
-            this.gvTypeOfCustomer.DetailHeight = 368;
+            this.gvTypeOfCustomer.DetailHeight = 294;
             this.gvTypeOfCustomer.GridControl = this.gcTypeOfCustomer;
             this.gvTypeOfCustomer.Name = "gvTypeOfCustomer";
             this.gvTypeOfCustomer.OptionsDetail.EnableMasterViewMode = false;
@@ -414,33 +417,34 @@
             // 
             this.gridColumn11.Caption = "Tên loại khách hàng";
             this.gridColumn11.FieldName = "name";
-            this.gridColumn11.MinWidth = 30;
+            this.gridColumn11.MinWidth = 27;
             this.gridColumn11.Name = "gridColumn11";
             this.gridColumn11.Visible = true;
             this.gridColumn11.VisibleIndex = 0;
-            this.gridColumn11.Width = 112;
+            this.gridColumn11.Width = 100;
             // 
             // gridColumn3
             // 
             this.gridColumn3.Caption = "Giảm giá";
             this.gridColumn3.FieldName = "discount";
-            this.gridColumn3.MinWidth = 30;
+            this.gridColumn3.MinWidth = 27;
             this.gridColumn3.Name = "gridColumn3";
             this.gridColumn3.Visible = true;
             this.gridColumn3.VisibleIndex = 1;
-            this.gridColumn3.Width = 112;
+            this.gridColumn3.Width = 100;
             // 
             // uc_customer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.xtraTabControl1);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "uc_customer";
-            this.Size = new System.Drawing.Size(952, 494);
+            this.Size = new System.Drawing.Size(846, 395);
             this.Tag = "Danh sách khách hàng";
             this.Load += new System.EventHandler(this.uc_staff_Load);
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
@@ -489,7 +493,6 @@
         private DevExpress.XtraBars.BarButtonItem btnExcel;
         private DevExpress.XtraBars.BarButtonItem btnWord;
         private DevExpress.XtraBars.BarButtonItem btnPdf;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;

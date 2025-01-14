@@ -16,19 +16,19 @@ namespace BUS
 
         public static void GetDataLk(RepositoryItemLookUpEdit lk)
         {
-            lk.DataSource = from item in db.Suppliers select item;
+            lk.DataSource = db.Suppliers.ToList();
             lk.DisplayMember = "name";
             lk.ValueMember = "id";
         }
         public static void GetDataLk(LookUpEdit lk)
         {
-            lk.Properties.DataSource = from item in db.Suppliers select item;
-            lk.Properties.DisplayMember = "name";
-            lk.Properties.ValueMember = "id";
+            lk.Properties.DataSource = db.Suppliers.ToList(); // Entity Framework lấy dữ liệu
+            lk.Properties.DisplayMember = "name"; // Trường hiển thị
+            lk.Properties.ValueMember = "id"; // Trường giá trị
         }
         public static void GetDataGV(GridControl gv)
         {
-            var lst = (from item in db.Suppliers select item).ToList();
+            var lst = db.Suppliers.ToList();
             gv.DataSource = Support.ToDataTable<Supplier>(lst);
         }
         public static int Insert(Supplier model)

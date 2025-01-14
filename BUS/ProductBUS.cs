@@ -3,6 +3,7 @@ using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -13,22 +14,33 @@ namespace BUS
     public static class ProductBUS
     {
         private static ManagementShopClothesEntities1 db = new ManagementShopClothesEntities1();
-
+        public static void ClearCache(this ManagementShopClothesEntities1 context)
+        {
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            var entries = context.ChangeTracker.Entries().ToList();
+            foreach (var entry in entries)
+            {
+                entry.State = EntityState.Detached;
+            }
+        }
         public static void GetDataLk(RepositoryItemLookUpEdit lk, int supplierId = 0)
         {
-            if (supplierId == 0)
-                lk.DataSource = from item in db.Products select item;
-            else
-                lk.DataSource = from item in db.Products where item.supplierId == supplierId select item;
+            var query = supplierId == 0
+                        ? db.Products.AsQueryable()
+                        : db.Products.Where(item => item.supplierId == supplierId);
+
+            lk.DataSource = query.ToList();
             lk.DisplayMember = "name";
             lk.ValueMember = "id";
         }
 
         public static void GetDataGV(GridControl gv)
         {
-            var lst = (from item in db.Products select item).ToList();
-            gv.DataSource = Support.ToDataTable<Product>(lst);
+            ClearCache(db);
+            var products = db.Products.ToList();
+            gv.DataSource = Support.ToDataTable<Product>(products);
         }
+
 
         public static int Insert(Product model)
         {

@@ -16,19 +16,13 @@ namespace BUS
 
         public static void GetDataLk(RepositoryItemLookUpEdit lk)
         {
-            lk.DataSource = from item in db.Sizes select item;
+            lk.DataSource = db.Sizes.ToList();
             lk.DisplayMember = "name";
             lk.ValueMember = "id";
         }
-        public static void GetDataLk(LookUpEdit lk)
-        {
-            lk.Properties.DataSource = from item in db.Sizes select item;
-            lk.Properties.DisplayMember = "name";
-            lk.Properties.ValueMember = "id";
-        }
         public static void GetDataGV(GridControl gv)
         {
-            var lst = (from item in db.Sizes select item).ToList();
+            var lst = db.Sizes.ToList();
             gv.DataSource = Support.ToDataTable<Size>(lst);
         }
         public static int Insert(Size model)

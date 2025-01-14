@@ -16,13 +16,13 @@ namespace BUS
 
         public static void GetDataLk(RepositoryItemLookUpEdit lk)
         {
-            lk.DataSource = from item in db.Staffs select item;
+            lk.DataSource = db.Staffs.ToList();
             lk.DisplayMember = "name";
             lk.ValueMember = "id";
         }
         public static void GetDataGV(GridControl gv)
         {
-            var lst = (from item in db.Staffs select item).ToList();
+            var lst = db.Staffs.ToList();
             gv.DataSource = Support.ToDataTable<Staff>(lst);
         }
         public static int Insert(Staff model)

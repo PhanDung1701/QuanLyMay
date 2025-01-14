@@ -54,7 +54,6 @@
             this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.imageStaff = new DevExpress.XtraEditors.Repository.RepositoryItemImageEdit();
             this.gridColumn9 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.lkRole = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
@@ -189,7 +188,7 @@
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
             this.barDockControlTop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.barDockControlTop.Size = new System.Drawing.Size(846, 30);
+            this.barDockControlTop.Size = new System.Drawing.Size(846, 32);
             // 
             // barDockControlBottom
             // 
@@ -204,28 +203,28 @@
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 30);
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 32);
             this.barDockControlLeft.Manager = this.barManager1;
             this.barDockControlLeft.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 365);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 363);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(846, 30);
+            this.barDockControlRight.Location = new System.Drawing.Point(846, 32);
             this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 365);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 363);
             // 
             // xtraTabControl1
             // 
             this.xtraTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.xtraTabControl1.Location = new System.Drawing.Point(0, 30);
+            this.xtraTabControl1.Location = new System.Drawing.Point(0, 32);
             this.xtraTabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
-            this.xtraTabControl1.Size = new System.Drawing.Size(846, 365);
+            this.xtraTabControl1.Size = new System.Drawing.Size(846, 363);
             this.xtraTabControl1.TabIndex = 15;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
@@ -238,7 +237,7 @@
             this.xtraTabPage1.Controls.Add(this.gcStaff);
             this.xtraTabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.xtraTabPage1.Name = "xtraTabPage1";
-            this.xtraTabPage1.Size = new System.Drawing.Size(844, 334);
+            this.xtraTabPage1.Size = new System.Drawing.Size(844, 330);
             this.xtraTabPage1.Text = "Nhân viên";
             // 
             // pictureBox1
@@ -263,7 +262,7 @@
             this.gcStaff.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.lkRole,
             this.imageStaff});
-            this.gcStaff.Size = new System.Drawing.Size(844, 334);
+            this.gcStaff.Size = new System.Drawing.Size(844, 330);
             this.gcStaff.TabIndex = 11;
             this.gcStaff.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvStaff});
@@ -279,7 +278,6 @@
             this.gridColumn3,
             this.gridColumn4,
             this.gridColumn5,
-            this.gridColumn1,
             this.gridColumn9});
             this.gvStaff.DetailHeight = 294;
             this.gvStaff.GridControl = this.gcStaff;
@@ -361,17 +359,6 @@
             this.gridColumn5.VisibleIndex = 5;
             this.gridColumn5.Width = 100;
             // 
-            // gridColumn1
-            // 
-            this.gridColumn1.Caption = "Hình ảnh";
-            this.gridColumn1.ColumnEdit = this.imageStaff;
-            this.gridColumn1.FieldName = "image";
-            this.gridColumn1.MinWidth = 27;
-            this.gridColumn1.Name = "gridColumn1";
-            this.gridColumn1.Visible = true;
-            this.gridColumn1.VisibleIndex = 6;
-            this.gridColumn1.Width = 100;
-            // 
             // imageStaff
             // 
             this.imageStaff.AllowDropDownWhenReadOnly = DevExpress.Utils.DefaultBoolean.True;
@@ -396,7 +383,7 @@
             this.gridColumn9.Name = "gridColumn9";
             this.gridColumn9.UnboundType = DevExpress.Data.UnboundColumnType.Object;
             this.gridColumn9.Visible = true;
-            this.gridColumn9.VisibleIndex = 7;
+            this.gridColumn9.VisibleIndex = 6;
             this.gridColumn9.Width = 67;
             // 
             // lkRole
@@ -415,7 +402,7 @@
             this.xtraTabPage2.Controls.Add(this.gcRole);
             this.xtraTabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.xtraTabPage2.Name = "xtraTabPage2";
-            this.xtraTabPage2.Size = new System.Drawing.Size(844, 332);
+            this.xtraTabPage2.Size = new System.Drawing.Size(844, 330);
             this.xtraTabPage2.Text = "Quyền";
             // 
             // gcRole
@@ -427,7 +414,7 @@
             this.gcRole.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gcRole.MenuManager = this.barManager1;
             this.gcRole.Name = "gcRole";
-            this.gcRole.Size = new System.Drawing.Size(844, 332);
+            this.gcRole.Size = new System.Drawing.Size(844, 330);
             this.gcRole.TabIndex = 0;
             this.gcRole.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvRole});
@@ -520,7 +507,6 @@
         private DevExpress.XtraBars.BarButtonItem btnExcel;
         private DevExpress.XtraBars.BarButtonItem btnWord;
         private DevExpress.XtraBars.BarButtonItem btnPdf;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
         private DevExpress.XtraGrid.Columns.GridColumn colUsername;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;

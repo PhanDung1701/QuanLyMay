@@ -59,7 +59,6 @@
             this.gridColumn8 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.lkMaterial = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.gridColumn7 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.imageProduct = new DevExpress.XtraEditors.Repository.RepositoryItemImageEdit();
             this.gridColumn19 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn10 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -242,10 +241,9 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(828, 218);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBox1.Location = new System.Drawing.Point(931, 273);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(9, 9);
+            this.pictureBox1.Size = new System.Drawing.Size(10, 11);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;
@@ -266,7 +264,7 @@
             this.lkSize,
             this.lkSupplier,
             this.lkMaterial});
-            this.gcProduct.Size = new System.Drawing.Size(844, 330);
+            this.gcProduct.Size = new System.Drawing.Size(941, 309);
             this.gcProduct.TabIndex = 11;
             this.gcProduct.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvProduct});
@@ -282,7 +280,6 @@
             this.gridColumn9,
             this.gridColumn8,
             this.gridColumn7,
-            this.gridColumn1,
             this.gridColumn19,
             this.gridColumn10,
             this.gridColumn11});
@@ -311,7 +308,7 @@
             this.gridColumn2.UnboundType = DevExpress.Data.UnboundColumnType.Object;
             this.gridColumn2.Visible = true;
             this.gridColumn2.VisibleIndex = 0;
-            this.gridColumn2.Width = 67;
+            this.gridColumn2.Width = 57;
             // 
             // gridColumn4
             // 
@@ -323,7 +320,7 @@
             this.gridColumn4.UnboundType = DevExpress.Data.UnboundColumnType.Object;
             this.gridColumn4.Visible = true;
             this.gridColumn4.VisibleIndex = 1;
-            this.gridColumn4.Width = 67;
+            this.gridColumn4.Width = 57;
             // 
             // lkCategory
             // 
@@ -346,7 +343,7 @@
             this.gridColumn6.UnboundType = DevExpress.Data.UnboundColumnType.Object;
             this.gridColumn6.Visible = true;
             this.gridColumn6.VisibleIndex = 2;
-            this.gridColumn6.Width = 67;
+            this.gridColumn6.Width = 57;
             // 
             // lkColor
             // 
@@ -369,7 +366,7 @@
             this.gridColumn5.UnboundType = DevExpress.Data.UnboundColumnType.Object;
             this.gridColumn5.Visible = true;
             this.gridColumn5.VisibleIndex = 3;
-            this.gridColumn5.Width = 100;
+            this.gridColumn5.Width = 85;
             // 
             // lkSize
             // 
@@ -392,7 +389,7 @@
             this.gridColumn9.UnboundType = DevExpress.Data.UnboundColumnType.Object;
             this.gridColumn9.Visible = true;
             this.gridColumn9.VisibleIndex = 4;
-            this.gridColumn9.Width = 67;
+            this.gridColumn9.Width = 70;
             // 
             // lkSupplier
             // 
@@ -415,7 +412,7 @@
             this.gridColumn8.UnboundType = DevExpress.Data.UnboundColumnType.Object;
             this.gridColumn8.Visible = true;
             this.gridColumn8.VisibleIndex = 5;
-            this.gridColumn8.Width = 100;
+            this.gridColumn8.Width = 82;
             // 
             // lkMaterial
             // 
@@ -436,18 +433,7 @@
             this.gridColumn7.Name = "gridColumn7";
             this.gridColumn7.Visible = true;
             this.gridColumn7.VisibleIndex = 6;
-            this.gridColumn7.Width = 100;
-            // 
-            // gridColumn1
-            // 
-            this.gridColumn1.Caption = "Hình ảnh";
-            this.gridColumn1.ColumnEdit = this.imageProduct;
-            this.gridColumn1.FieldName = "image";
-            this.gridColumn1.MinWidth = 27;
-            this.gridColumn1.Name = "gridColumn1";
-            this.gridColumn1.Visible = true;
-            this.gridColumn1.VisibleIndex = 7;
-            this.gridColumn1.Width = 100;
+            this.gridColumn7.Width = 82;
             // 
             // imageProduct
             // 
@@ -473,8 +459,8 @@
             this.gridColumn19.OptionsColumn.AllowEdit = false;
             this.gridColumn19.OptionsColumn.ReadOnly = true;
             this.gridColumn19.Visible = true;
-            this.gridColumn19.VisibleIndex = 9;
-            this.gridColumn19.Width = 100;
+            this.gridColumn19.VisibleIndex = 7;
+            this.gridColumn19.Width = 82;
             // 
             // gridColumn10
             // 
@@ -484,7 +470,7 @@
             this.gridColumn10.Name = "gridColumn10";
             this.gridColumn10.Visible = true;
             this.gridColumn10.VisibleIndex = 8;
-            this.gridColumn10.Width = 94;
+            this.gridColumn10.Width = 77;
             // 
             // gridColumn11
             // 
@@ -494,8 +480,8 @@
             this.gridColumn11.Name = "gridColumn11";
             this.gridColumn11.OptionsColumn.ReadOnly = true;
             this.gridColumn11.Visible = true;
-            this.gridColumn11.VisibleIndex = 10;
-            this.gridColumn11.Width = 94;
+            this.gridColumn11.VisibleIndex = 9;
+            this.gridColumn11.Width = 90;
             // 
             // xtraTabPage4
             // 
@@ -617,11 +603,9 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn9;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit lkColor;
         private DevExpress.XtraEditors.Repository.RepositoryItemImageEdit imageProduct;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private DevExpress.XtraBars.BarButtonItem btnExcel;
         private DevExpress.XtraBars.BarButtonItem btnWord;
         private DevExpress.XtraBars.BarButtonItem btnPdf;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage4;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit lkCategory;
@@ -637,5 +621,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn10;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn11;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

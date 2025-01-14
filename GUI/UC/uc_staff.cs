@@ -115,38 +115,63 @@ namespace GUI.UC
         {
             if (e.Column.FieldName == "image")
             {
-
                 try
                 {
-
-                    Image img = Image.FromFile("../../Images/" + gvStaff.GetDataRow(e.RowHandle)["image"].ToString());
-                    images.Images.Clear();
-                    images.Images.Add(img);
+                    // Retrieve the data row safely, check if it's null
+                    DataRow dataRow = gvStaff.GetDataRow(e.RowHandle);
+                    if (dataRow != null)
+                    {
+                        // Check if the 'image' column exists and is not null or empty
+                        string imagePath = dataRow["image"].ToString();
+                        if (!string.IsNullOrEmpty(imagePath) && File.Exists("../../Images/" + imagePath))
+                        {
+                            Image img = Image.FromFile("../../Images/" + imagePath);
+                            images.Images.Clear();
+                            images.Images.Add(img);
+                        }
+                        else
+                        {
+                            // Fallback image if the file does not exist or the field is null/empty
+                            Image img = Image.FromFile("../../Images/loadImg.png");
+                            images.Images.Clear();
+                            images.Images.Add(img);
+                        }
+                    }
+                    else
+                    {
+                        // Fallback if the data row is null
+                        Image img = Image.FromFile("../../Images/loadImg.png");
+                        images.Images.Clear();
+                        images.Images.Add(img);
+                    }
                 }
                 catch (Exception ex)
                 {
-
+                    // In case of any error, show a fallback image
                     Image img = Image.FromFile("../../Images/loadImg.png");
                     images.Images.Clear();
-                    //    images.ImageSize = new Size(100, 100);
-
                     images.Images.Add(img);
                 }
 
                 imageStaff.Images = images;
             }
         }
-        //thay đổi hình ảnh nhân viên
+
+
+        // Method to change the employee image
         private void imageStaff_Click(object sender, EventArgs e)
         {
             open = new OpenFileDialog();
             if (open.ShowDialog() == DialogResult.OK)
             {
                 pictureBox1.Image = Image.FromFile(open.FileName);
-                if (!File.Exists("../../Images/" + open.SafeFileName))
+
+                string imagePath = "../../Images/" + open.SafeFileName;
+                if (!File.Exists(imagePath))
                 {
-                    pictureBox1.Image.Save("../../Images/" + open.SafeFileName);
+                    pictureBox1.Image.Save(imagePath);
                 }
+
                 try
                 {
                     DataRow dr = gvStaff.GetFocusedDataRow();
@@ -161,19 +186,23 @@ namespace GUI.UC
                         phone = dr["phone"].ToString().Trim(),
                         email = dr["email"].ToString().Trim(),
                     };
+
                     int i = StaffBUS.Update(model);
                     if (i == 1)
                         StaffBUS.GetDataGV(gcStaff);
                     else
                         XtraMessageBox.Show("Có lỗi xảy ra.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                     open = null;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-
+                    // Handle the exception (optional logging or error message)
+                    XtraMessageBox.Show("Có lỗi xảy ra khi cập nhật ảnh.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
+
         //phím delete xoá nhân viên
         private void gcStaff_ProcessGridKey(object sender, KeyEventArgs e)
         {
