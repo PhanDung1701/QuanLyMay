@@ -55,8 +55,21 @@ namespace GUI.UC
             ProductBUS.GetDataLk(lkProduct, supplierId);
             layoutGroupImportDetail.Enabled = true;
             layoutGroupImportDetail.Text = "Chi tiết phiếu nhập " + entrySlipId;
-            txtTienPhaiTra.Text = Support.convertVND(gvImport.GetRowCellValue(gvImport.FocusedRowHandle, "total").ToString());
+
+            // Get the value of the "total" column for the focused row
+            var totalValue = gvImport.GetRowCellValue(gvImport.FocusedRowHandle, "total");
+
+            // Ensure the value is not null and can be converted to a double
+            if (totalValue != null && double.TryParse(totalValue.ToString(), out double total))
+            {
+                txtTienPhaiTra.Text = Support.convertVND(total); // Pass the double value to convertVND
+            }
+            else
+            {
+                txtTienPhaiTra.Text = "Invalid total value";
+            }
         }
+
         //click 1 dòng trong gridview nhập kho
         private void gvImport_RowCellClick(object sender, RowCellClickEventArgs e)
         {
@@ -92,7 +105,7 @@ namespace GUI.UC
 
                 XtraMessageBox.Show("Bạn chưa chọn nhà cung cấp", "Thông báo");
             }
-           
+
         }
         //huỷ 1 phiếu trong gridview nhập kho
         private void destroyImport()

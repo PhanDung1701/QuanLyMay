@@ -58,8 +58,21 @@ namespace GUI.UC
             ProductBUS.GetDataLk(lkProduct);
             layoutGroupOrderDetail.Enabled = txtTienKhachDua.Enabled = true;
             layoutGroupOrderDetail.Text = "Chi tiết hoá đơn " + mahd;
-            txtTienPhaiTra.Text = Support.convertVND(gvOrder.GetRowCellValue(gvOrder.FocusedRowHandle, "total").ToString());
+
+            // Get the value of the "total" column for the focused row
+            var totalValue = gvOrder.GetRowCellValue(gvOrder.FocusedRowHandle, "total");
+
+            // Ensure the value is not null and can be converted to a double
+            if (totalValue != null && double.TryParse(totalValue.ToString(), out double total))
+            {
+                txtTienPhaiTra.Text = Support.convertVND(total); // Pass the double value to convertVND
+            }
+            else
+            {
+                txtTienPhaiTra.Text = "Invalid total value"; // Handle invalid or null values
+            }
         }
+
         //click 1 dòng trong gridview hoá đơn
         private void gvOrder_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
         {
@@ -244,40 +257,66 @@ namespace GUI.UC
         //thanh toán 1 hoá đơn
         private void btnThanhToan_Click(object sender, EventArgs e)
         {
-            if (txtTienPhaiTra.Text.Trim().Length == 0)
+            if (string.IsNullOrWhiteSpace(txtTienPhaiTra.Text))
             {
                 XtraMessageBox.Show("Mời bạn chọn hoá đơn muốn thanh toán.", "Thông báo");
                 return;
             }
-            double tienPhaiTra = double.Parse(gvOrder.GetRowCellValue(gvOrder.FocusedRowHandle, "total").ToString());
+
+            // Retrieve and parse the total amount
+            if (!double.TryParse(gvOrder.GetRowCellValue(gvOrder.FocusedRowHandle, "total")?.ToString(), out double tienPhaiTra))
+            {
+                XtraMessageBox.Show("Không thể lấy tổng tiền từ hoá đơn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             if (tienPhaiTra == 0)
             {
                 XtraMessageBox.Show("Hoá đơn chưa có sản phẩm không cần thanh toán.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (txtTienKhachDua.Text.Trim().Length == 0)
+
+            if (string.IsNullOrWhiteSpace(txtTienKhachDua.Text))
             {
                 XtraMessageBox.Show("Khách chưa đưa tiền.", "Thông báo");
                 return;
             }
-            double tienKhachDua = double.Parse(txtTienKhachDua.Text.Trim());
+
+            // Retrieve and parse the customer's payment amount
+            if (!double.TryParse(txtTienKhachDua.Text.Trim(), out double tienKhachDua))
+            {
+                XtraMessageBox.Show("Số tiền khách đưa không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             if (tienPhaiTra > tienKhachDua)
             {
                 XtraMessageBox.Show("Khách đưa không đủ tiền.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            int i = InvoiceBUS.Update(int.Parse(gvOrder.GetRowCellValue(gvOrder.FocusedRowHandle, "id").ToString()), true);
-            if (i != -1)
+
+            // Retrieve the invoice ID
+            if (!int.TryParse(gvOrder.GetRowCellValue(gvOrder.FocusedRowHandle, "id")?.ToString(), out int invoiceId))
+            {
+                XtraMessageBox.Show("Không thể lấy mã hoá đơn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Update the invoice as paid
+            int result = InvoiceBUS.Update(invoiceId, true);
+            if (result != -1)
             {
                 XtraMessageBox.Show("Thanh toán thành công.", "Thông báo");
-                txtTienThua.Text = Support.convertVND((tienKhachDua - tienPhaiTra).ToString());
+                txtTienThua.Text = Support.convertVND(tienKhachDua - tienPhaiTra);
                 InvoiceBUS.GetDataGV(gcOrder, false);
                 clearDataGVOrderDetail();
             }
-
+            else
+            {
+                XtraMessageBox.Show("Có lỗi xảy ra khi cập nhật hoá đơn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
         //chuyển về kiểu tiền tệ khi nhập tiền vào textbox
         private void txtTienKhachDua_KeyUp(object sender, KeyEventArgs e)
         {
@@ -285,18 +324,31 @@ namespace GUI.UC
             decimal value;
             try
             {
+                // Parse input text with thousands separator
                 value = decimal.Parse(txtTienKhachDua.Text, NumberStyles.AllowThousands);
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                value = 0;
+                value = 0; // Default to 0 if parsing fails
             }
+
+            // Format and display the value with thousand separators
             txtTienKhachDua.Text = String.Format(culture, "{0:N0}", value);
-            txtTienKhachDua.Select(txtTienKhachDua.Text.Length, 0);
-            decimal tienPhaiTra = decimal.Parse(gvOrder.GetRowCellValue(gvOrder.FocusedRowHandle, "total").ToString());
-            txtTienThua.Text = Support.convertVND((value - tienPhaiTra).ToString());
+            txtTienKhachDua.Select(txtTienKhachDua.Text.Length, 0); // Maintain cursor position
+
+            // Retrieve the "total" value from gvOrder
+            decimal tienPhaiTra = 0;
+            var totalValue = gvOrder.GetRowCellValue(gvOrder.FocusedRowHandle, "total");
+            if (totalValue != null && decimal.TryParse(totalValue.ToString(), out decimal total))
+            {
+                tienPhaiTra = total;
+            }
+
+            // Calculate the change and format the result
+            decimal tienThua = value - tienPhaiTra;
+            txtTienThua.Text = Support.convertVND((double)tienThua);
         }
+
         //không cho nhập chữ vào ô textbox
         private void txtTienKhachDua_KeyPress(object sender, KeyPressEventArgs e)
         {

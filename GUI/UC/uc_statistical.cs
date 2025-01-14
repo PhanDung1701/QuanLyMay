@@ -36,19 +36,22 @@ namespace GUI.UC
 
         private void btnThongKe_Click(object sender, EventArgs e)
         {
-            if(DateTime.Parse(dateFrom.DateTime.ToShortDateString()).CompareTo(DateTime.Parse(dateTo.DateTime.ToShortDateString())) >0)
+            if (DateTime.Parse(dateFrom.DateTime.ToShortDateString()).CompareTo(DateTime.Parse(dateTo.DateTime.ToShortDateString())) > 0)
             {
                 XtraMessageBox.Show("Ngày tìm không hợp lệ.", "Thông báo");
                 return;
             }
+
             var sumStatistic = StatisticalBUS.TotalInvoice(dateFrom.DateTime, dateTo.DateTime);
             var sumSpend = StatisticalBUS.TotalEntrySlip(dateFrom.DateTime, dateTo.DateTime);
-            txtSumStatistic.Text = Support.convertVND(sumStatistic.ToString());
-            txtSumSpend.Text = Support.convertVND(sumSpend.ToString());
-            txtProfit.Text = Support.convertVND((sumStatistic - sumSpend).ToString());
-            tb=StatisticalBUS.loadDetailStatistical(gcStatistical, dateFrom.DateTime, dateTo.DateTime);
 
+            txtSumStatistic.Text = Support.convertVND(sumStatistic); 
+            txtSumSpend.Text = Support.convertVND(sumSpend);  
+            txtProfit.Text = Support.convertVND(sumStatistic - sumSpend); 
+
+            tb = StatisticalBUS.loadDetailStatistical(gcStatistical, dateFrom.DateTime, dateTo.DateTime);
         }
+
 
         private void btnPrint_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {

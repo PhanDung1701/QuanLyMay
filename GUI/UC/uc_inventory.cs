@@ -36,18 +36,22 @@ namespace GUI.UC
 
         private void btnThongKe_Click(object sender, EventArgs e)
         {
-            if(DateTime.Parse(dateFrom.DateTime.ToShortDateString()).CompareTo(DateTime.Parse(dateTo.DateTime.ToShortDateString())) >0)
+            if (DateTime.Parse(dateFrom.DateTime.ToShortDateString()).CompareTo(DateTime.Parse(dateTo.DateTime.ToShortDateString())) > 0)
             {
                 XtraMessageBox.Show("Ngày tìm không hợp lệ.", "Thông báo");
                 return;
             }
+
             var quantityEntrySlip = InventoryBUS.QuantityEntrySlip(dateFrom.DateTime, dateTo.DateTime);
             var quantityInvoice = InventoryBUS.QuantityInvoice(dateFrom.DateTime, dateTo.DateTime);
-            txtLuongNhap.Text = Support.convertVND(quantityEntrySlip.ToString());
-            txtLuongBan.Text = Support.convertVND(quantityInvoice.ToString());
-            tb= InventoryBUS.loadDetailInventory(gcInventory, dateFrom.DateTime, dateTo.DateTime);
 
+            txtLuongNhap.Text = Support.convertVND(quantityEntrySlip);
+            txtLuongBan.Text = Support.convertVND(quantityInvoice);
+
+            // Gọi phương thức loadDetailInventory
+            tb = InventoryBUS.loadDetailInventory(gcInventory, dateFrom.DateTime, dateTo.DateTime);
         }
+
 
         private void btnPrint_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {

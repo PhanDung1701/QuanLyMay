@@ -43,6 +43,7 @@
           <Property Name="createDate" Type="date" />
           <Property Name="supplierId" Type="int" />
           <Property Name="isPay" Type="bit" />
+          <Property Name="total" Type="float" />
         </EntityType>
         <EntityType Name="EntrySlipDetail">
           <Key>
@@ -64,6 +65,7 @@
           <Property Name="customerId" Type="int" />
           <Property Name="discount" Type="int" />
           <Property Name="isPay" Type="bit" />
+          <Property Name="total" Type="float" />
         </EntityType>
         <EntityType Name="InvoiceDetail">
           <Key>
@@ -527,6 +529,7 @@
           <NavigationProperty Name="Staff" Relationship="Self.fk_EntrySlip_Staff" FromRole="EntrySlip" ToRole="Staff" />
           <NavigationProperty Name="Supplier" Relationship="Self.fk_EntrySlip_Supplier" FromRole="EntrySlip" ToRole="Supplier" />
           <NavigationProperty Name="EntrySlipDetails" Relationship="Self.FK_EntrySlipDetail_EntrySlip" FromRole="EntrySlip" ToRole="EntrySlipDetail" />
+          <Property Name="total" Type="Double" />
         </EntityType>
         <EntityType Name="EntrySlipDetail">
           <Key>
@@ -553,6 +556,7 @@
           <NavigationProperty Name="Customer" Relationship="Self.fk_Invoice_Customer" FromRole="Invoice" ToRole="Customer" />
           <NavigationProperty Name="InvoiceDetails" Relationship="Self.fk_ID_Invoice" FromRole="Invoice" ToRole="InvoiceDetail" />
           <NavigationProperty Name="Staff" Relationship="Self.fk_Invoice_Staff" FromRole="Invoice" ToRole="Staff" />
+          <Property Name="total" Type="Double" />
         </EntityType>
         <EntityType Name="InvoiceDetail">
           <Key>
@@ -954,7 +958,7 @@
             <Parameter Name="date" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="TopSelling" IsComposable="true" ReturnType="Collection(ManagementShopClothesModel.TopSelling_Result)">
-            <Parameter Name="quantity" Mode="In" Type="Int32" />
+          <Parameter Name="quantity" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="TopStaffSell" IsComposable="true" ReturnType="Collection(ManagementShopClothesModel.TopStaffSell_Result)">
             <Parameter Name="checkType" Mode="In" Type="Boolean" />
@@ -1014,6 +1018,7 @@
           <EntitySetMapping Name="EntrySlips">
             <EntityTypeMapping TypeName="ManagementShopClothesModel.EntrySlip">
               <MappingFragment StoreEntitySet="EntrySlip">
+                <ScalarProperty Name="total" ColumnName="total" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="staffId" ColumnName="staffId" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
@@ -1036,6 +1041,7 @@
           <EntitySetMapping Name="Invoices">
             <EntityTypeMapping TypeName="ManagementShopClothesModel.Invoice">
               <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="total" ColumnName="total" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="staffId" ColumnName="staffId" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />

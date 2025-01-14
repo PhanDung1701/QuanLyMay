@@ -4,9 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BUS
 {
@@ -14,67 +11,55 @@ namespace BUS
     {
         private static ManagementShopClothesEntities1 db = new ManagementShopClothesEntities1();
 
-        public static void ClearCache(this ManagementShopClothesEntities1 context)
-        {
-            const BindingFlags FLAGS = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-            var method = context.GetType().GetMethod("ClearCache", FLAGS);
-            method.Invoke(context, null);
-        }
-
         public static double TotalEntrySlip(DateTime dateTimeFrom, DateTime dateTimeTo)
         {
-            ClearCache(db);
-            double sumMoney = db.EntrySlips
-                .Where(x => x.isPay == true && x.createDate.Value.CompareTo(dateTimeFrom) >= 0 && x.createDate.Value.CompareTo(dateTimeTo) <= 0)
-                .SelectMany(x => x.EntrySlipDetails) // Lấy tất cả EntrySlipDetails
-                .Sum(x => x.price.HasValue && x.quantity.HasValue ? x.price.Value * x.quantity.Value : 0); // Tính tổng tiền (price * quantity)
-            return sumMoney;
+            return db.EntrySlips
+                     .Where(x => x.isPay == true && x.createDate >= dateTimeFrom && x.createDate <= dateTimeTo)
+                     .Sum(x => x.total.GetValueOrDefault());
         }
 
         public static double TotalInvoice(DateTime dateTimeFrom, DateTime dateTimeTo)
         {
-            ClearCache(db);
-            double sumMoney = db.Invoices
-                .Where(x => x.isPay == true && x.createDate.Value.CompareTo(dateTimeFrom) >= 0 && x.createDate.Value.CompareTo(dateTimeTo) <= 0)
-                .SelectMany(x => x.InvoiceDetails) // Lấy tất cả InvoiceDetails
-                .Sum(x => x.price.HasValue && x.quantity.HasValue ? x.price.Value * x.quantity.Value : 0); // Tính tổng tiền (price * quantity)
-            return sumMoney;
+            return db.Invoices
+                     .Where(x => x.isPay == true && x.createDate >= dateTimeFrom && x.createDate <= dateTimeTo)
+                     .Sum(x => x.total.GetValueOrDefault());
         }
 
         public static DataTable loadDetailStatistical(GridControl gc, DateTime dateTimeFrom, DateTime dateTimeTo)
         {
-            ClearCache(db);
             DataTable tb = new DataTable();
             tb.Columns.Add("date");
             tb.Columns.Add("invoice");
             tb.Columns.Add("entrySlip");
             tb.Columns.Add("profit");
 
-            var lstOrder = db.Invoices
-                .Where(x => x.isPay == true && x.createDate.Value.CompareTo(dateTimeFrom) >= 0 && x.createDate.Value.CompareTo(dateTimeTo) <= 0)
-                .SelectMany(x => x.InvoiceDetails) // Lấy tất cả InvoiceDetails
-                .ToList();
-            var lstImport = db.EntrySlips
-                .Where(x => x.isPay == true && x.createDate.Value.CompareTo(dateTimeFrom) >= 0 && x.createDate.Value.CompareTo(dateTimeTo) <= 0)
-                .SelectMany(x => x.EntrySlipDetails) // Lấy tất cả EntrySlipDetails
-                .ToList();
+            var invoices = db.Invoices
+                             .Where(x => x.isPay == true && x.createDate >= dateTimeFrom && x.createDate <= dateTimeTo)
+                             .Select(x => new { x.createDate, x.total })
+                             .ToList();
 
-            for (DateTime date = dateTimeFrom; date.CompareTo(dateTimeTo) <= 0; date = date.AddDays(1))
+            var entrySlips = db.EntrySlips
+                               .Where(x => x.isPay == true && x.createDate >= dateTimeFrom && x.createDate <= dateTimeTo)
+                               .Select(x => new { x.createDate, x.total })
+                               .ToList();
+
+            for (DateTime date = dateTimeFrom.Date; date <= dateTimeTo.Date; date = date.AddDays(1))
             {
-                var lstOrderTemp = lstOrder.Where(x => DateTime.Parse(x.Invoice.createDate.Value.ToShortDateString()).CompareTo(DateTime.Parse(date.ToShortDateString())) == 0).ToList();
-                var lstImportTemp = lstImport.Where(x => DateTime.Parse(x.EntrySlip.createDate.Value.ToShortDateString()).CompareTo(DateTime.Parse(date.ToShortDateString())) == 0).ToList();
+                var dailyInvoices = invoices
+                    .Where(x => x.createDate.Value.Date == date)
+                    .Sum(x => x.total.GetValueOrDefault());
 
-                if (lstOrderTemp.Count != 0 || lstImportTemp.Count != 0)
+                var dailyEntrySlips = entrySlips
+                    .Where(x => x.createDate.Value.Date == date)
+                    .Sum(x => x.total.GetValueOrDefault());
+
+                if (dailyInvoices > 0 || dailyEntrySlips > 0)
                 {
                     DataRow dr = tb.NewRow();
-                    var sumOrder = lstOrderTemp.Sum(x => x.price.HasValue && x.quantity.HasValue ? x.price.Value * x.quantity.Value : 0);
-                    var sumImport = lstImportTemp.Sum(x => x.price.HasValue && x.quantity.HasValue ? x.price.Value * x.quantity.Value : 0);
-
-                    dr[0] = date.ToShortDateString();
-                    dr[1] = Support.convertVND(sumOrder.ToString());
-                    dr[2] = Support.convertVND(sumImport.ToString());
-                    dr[3] = Support.convertVND((sumOrder - sumImport).ToString());
-
+                    dr["date"] = date.ToShortDateString();
+                    dr["invoice"] = Support.convertVND(dailyInvoices); 
+                    dr["entrySlip"] = Support.convertVND(dailyEntrySlips);
+                    dr["profit"] = Support.convertVND(dailyInvoices - dailyEntrySlips);
                     tb.Rows.Add(dr);
                 }
             }
@@ -82,5 +67,6 @@ namespace BUS
             gc.DataSource = tb;
             return tb;
         }
+
     }
 }

@@ -24,6 +24,7 @@ namespace DAO
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<int> supplierId { get; set; }
         public Nullable<bool> isPay { get; set; }
+        public Nullable<double> total { get; set; }
     
         public virtual Staff Staff { get; set; }
         public virtual Supplier Supplier { get; set; }

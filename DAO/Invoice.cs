@@ -25,6 +25,7 @@ namespace DAO
         public Nullable<int> customerId { get; set; }
         public Nullable<int> discount { get; set; }
         public Nullable<bool> isPay { get; set; }
+        public Nullable<double> total { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }

@@ -72,9 +72,9 @@ namespace GUI.UC
                 }
         }
 
-        
 
-       
+
+
 
         private void chartTopCustomer_CustomDrawAxisLabel(object sender, CustomDrawAxisLabelEventArgs e)
         {
@@ -82,14 +82,15 @@ namespace GUI.UC
             {
                 try
                 {
-                    e.Item.Text = Support.convertVND(e.Item.Text);
+                    double value = double.Parse(e.Item.Text);
+                    e.Item.Text = Support.convertVND(value);
                 }
                 catch (Exception ex)
                 {
-
                 }
             }
         }
+
 
         private void btnStatisticStaff_Click(object sender, EventArgs e)
         {

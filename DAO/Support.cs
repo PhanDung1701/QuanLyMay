@@ -92,12 +92,12 @@ namespace DAO
             }
             return dt;
         }
-        public static string convertVND(string money)
+        public static string convertVND(double money)
         {
-              var format = System.Globalization.CultureInfo.GetCultureInfo("en-US");
-              string value = String.Format(format, "{0:N0}", Convert.ToDouble(money));
-              return value;
+            var format = System.Globalization.CultureInfo.GetCultureInfo("en-US");
+            return String.Format(format, "{0:N0}", money);
         }
+
         public static DataTable GetDBName(string pServer, string pUser, string pPass)
         {
             DataTable dt = new DataTable();

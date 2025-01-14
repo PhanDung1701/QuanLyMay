@@ -12,18 +12,25 @@ namespace BUS
     public static class EntrySlipBUS
     {
         private static ManagementShopClothesEntities1 db = new ManagementShopClothesEntities1();
-       
+
         public static void GetDataGV(GridControl gv, bool isPay = true)
         {
-            
-            List<EntrySlip> lst;
+            IQueryable<EntrySlip> query;
+
             if (isPay)
-                lst = (from item in db.EntrySlips select item).ToList();
+            {
+                query = db.EntrySlips.Where(x => x.isPay == true);
+            }
             else
-                lst = (from item in db.EntrySlips where item.isPay == false select item).ToList();
+            {
+                query = db.EntrySlips.Where(x => x.isPay == false);
+            }
+
+            var lst = query.ToList(); 
             gv.DataSource = Support.ToDataTable<EntrySlip>(lst);
         }
-        
+
+
         public static int Insert(EntrySlip model)
         {
             try
