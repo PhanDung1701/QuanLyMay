@@ -10,6 +10,7 @@ namespace BUS
 {
     public class CategoryBUS
     {
+
         private static ManagementShopClothesEntities1 db = new ManagementShopClothesEntities1();
 
         public static void GetDataLk(RepositoryItemLookUpEdit lk)
@@ -91,4 +92,5 @@ namespace BUS
             return db.Categories.SingleOrDefault(x => x.id == id);
         }
     }
+
 }

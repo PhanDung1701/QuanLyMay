@@ -2,6 +2,7 @@
 using DevExpress.XtraGrid;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -12,21 +13,32 @@ namespace BUS
     public static class EntrySlipBUS
     {
         private static ManagementShopClothesEntities1 db = new ManagementShopClothesEntities1();
+        public static void ClearCache(this ManagementShopClothesEntities1 context)
+        {
+            // Kiểm tra nếu context hợp lệ
+            if (context == null) throw new ArgumentNullException(nameof(context));
 
+            // Xóa tất cả các thực thể đang được theo dõi bởi DbContext
+            var entries = context.ChangeTracker.Entries().ToList();
+            foreach (var entry in entries)
+            {
+                entry.State = EntityState.Detached; // Ngắt theo dõi
+            }
+        }
         public static void GetDataGV(GridControl gv, bool isPay = true)
         {
-            IQueryable<EntrySlip> query;
+            foreach (var item in db.EntrySlips)
+            {
+                db.Entry(item).Reload();
+            }
 
+            ClearCache(db);
+            List<EntrySlip> lst;
             if (isPay)
-            {
-                query = db.EntrySlips.Where(x => x.isPay == true);
-            }
+                lst = (from item in db.EntrySlips select item).ToList();
             else
-            {
-                query = db.EntrySlips.Where(x => x.isPay == false);
-            }
+                lst = (from item in db.EntrySlips where item.isPay == false select item).ToList();
 
-            var lst = query.ToList(); 
             gv.DataSource = Support.ToDataTable<EntrySlip>(lst);
         }
 

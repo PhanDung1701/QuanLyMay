@@ -14,30 +14,22 @@ namespace BUS
         private static ManagementShopClothesEntities1 db = new ManagementShopClothesEntities1();
         public static void GetDataGV(GridControl gv, int invoiceId)
         {
-            // Xóa dòng Refresh và thay thế bằng Reload cho từng đối tượng
-            foreach (var item in db.InvoiceDetails)
-            {
-                db.Entry(item).Reload();  // Làm mới đối tượng InvoiceDetail
-            }
-
-            var lst = (from item in db.InvoiceDetails
-                       where item.invoiceId == invoiceId
-                       select item).ToList();
+            // Lấy dữ liệu từ cơ sở dữ liệu với AsNoTracking để giảm tải bộ nhớ
+            var lst = db.InvoiceDetails
+                        .AsNoTracking()
+                        .Where(item => item.invoiceId == invoiceId)
+                        .ToList();
 
             gv.DataSource = Support.ToDataTable<InvoiceDetail>(lst);
         }
 
         public static List<InvoiceDetail> GetDataGV(int invoiceId)
         {
-            // Xóa dòng Refresh và thay thế bằng Reload cho từng đối tượng
-            foreach (var item in db.InvoiceDetails)
-            {
-                db.Entry(item).Reload();  // Làm mới đối tượng InvoiceDetail
-            }
-
-            return (from item in db.InvoiceDetails
-                    where item.invoiceId == invoiceId
-                    select item).ToList();
+            // Truy vấn và trả về danh sách không theo dõi
+            return db.InvoiceDetails
+                     .AsNoTracking()
+                     .Where(item => item.invoiceId == invoiceId)
+                     .ToList();
         }
 
         public static int Insert(InvoiceDetail model)
@@ -52,13 +44,23 @@ namespace BUS
             }
             else
             {
-
                 db.InvoiceDetails.Add(model);
                 db.SaveChanges();
-                return 1;
 
+                // Giảm quantity trong Product
+                var product = db.Products.SingleOrDefault(x => x.id == model.productId);
+                if (product != null)
+                {
+                    product.quantity -= model.quantity;
+                    if (product.quantity < 0)
+                        product.quantity = 0; // Đảm bảo không âm
+                    db.SaveChanges();
+                }
+
+                return 1;
             }
         }
+
         public static int Update(InvoiceDetail model)
         {
             if (model.quantity == 0)
@@ -81,14 +83,23 @@ namespace BUS
         }
         public static int Delete(int id)
         {
-            var model = db.InvoiceDetails.FirstOrDefault(x => x.id==id);
+            var model = db.InvoiceDetails.FirstOrDefault(x => x.id == id);
             if (model == null)
                 return -1;
+
+            // Tăng quantity trong Product
+            var product = db.Products.SingleOrDefault(x => x.id == model.productId);
+            if (product != null)
+            {
+                product.quantity += model.quantity;
+                db.SaveChanges();
+            }
+
             db.InvoiceDetails.Remove(model);
             db.SaveChanges();
             return 1;
-
         }
+
         public static InvoiceDetail FindByID(int id)
         {
             return db.InvoiceDetails.SingleOrDefault(x => x.id==id);

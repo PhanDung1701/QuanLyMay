@@ -14,9 +14,15 @@ namespace BUS
         private static ManagementShopClothesEntities1 db = new ManagementShopClothesEntities1();
         public static void ClearCache(this ManagementShopClothesEntities1 context)
         {
-            const BindingFlags FLAGS = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-            var method = context.GetType().GetMethod("ClearCache", FLAGS);
-            method.Invoke(context, null);
+            // Kiểm tra nếu context hợp lệ
+            if (context == null) throw new ArgumentNullException(nameof(context));
+
+            // Xóa tất cả các thực thể đang được theo dõi bởi DbContext
+            var entries = context.ChangeTracker.Entries().ToList();
+            foreach (var entry in entries)
+            {
+                entry.State = EntityState.Detached; // Ngắt theo dõi
+            }
         }
         public static DataTable loadTopCustomerBuy(bool checkType, DateTime date)
         {

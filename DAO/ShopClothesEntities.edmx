@@ -595,7 +595,6 @@
           <Property Name="categoryId" Type="Int32" />
           <Property Name="requimate" Type="Int32" />
           <Property Name="remate" Type="Int32" />
-          <Property Name="quantity" Type="Int32" />
           <NavigationProperty Name="Category" Relationship="Self.fk_P_Category" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="Color" Relationship="Self.fk_P_Color" FromRole="Product" ToRole="Color" />
           <NavigationProperty Name="EntrySlipDetails" Relationship="Self.FK_EntrySlipDetail_Product" FromRole="Product" ToRole="EntrySlipDetail" />
@@ -603,6 +602,7 @@
           <NavigationProperty Name="Material" Relationship="Self.fk_P_Material" FromRole="Product" ToRole="Material" />
           <NavigationProperty Name="Size" Relationship="Self.fk_P_Size" FromRole="Product" ToRole="Size" />
           <NavigationProperty Name="Supplier" Relationship="Self.fk_P_Supplier" FromRole="Product" ToRole="Supplier" />
+          <Property Name="quantity" Type="Int32" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -1075,6 +1075,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="ManagementShopClothesModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="price" ColumnName="price" />
@@ -1086,7 +1087,6 @@
                 <ScalarProperty Name="categoryId" ColumnName="categoryId" />
                 <ScalarProperty Name="requimate" ColumnName="requimate" />
                 <ScalarProperty Name="remate" ColumnName="remate" />
-                <ScalarProperty Name="quantity" ColumnName="quantity" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

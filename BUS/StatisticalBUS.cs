@@ -15,14 +15,14 @@ namespace BUS
         {
             return db.EntrySlips
                      .Where(x => x.isPay == true && x.createDate >= dateTimeFrom && x.createDate <= dateTimeTo)
-                     .Sum(x => x.total.GetValueOrDefault());
+                     .Sum(x => x.total.HasValue ? x.total.Value : 0);  // Sử dụng HasValue để kiểm tra null và thay thế bằng 0 nếu null
         }
 
         public static double TotalInvoice(DateTime dateTimeFrom, DateTime dateTimeTo)
         {
             return db.Invoices
                      .Where(x => x.isPay == true && x.createDate >= dateTimeFrom && x.createDate <= dateTimeTo)
-                     .Sum(x => x.total.GetValueOrDefault());
+                     .Sum(x => x.total.HasValue ? x.total.Value : 0);  // Sử dụng HasValue để kiểm tra null và thay thế bằng 0 nếu null
         }
 
         public static DataTable loadDetailStatistical(GridControl gc, DateTime dateTimeFrom, DateTime dateTimeTo)
@@ -47,17 +47,17 @@ namespace BUS
             {
                 var dailyInvoices = invoices
                     .Where(x => x.createDate.Value.Date == date)
-                    .Sum(x => x.total.GetValueOrDefault());
+                    .Sum(x => x.total.HasValue ? x.total.Value : 0);  // Sử dụng HasValue để kiểm tra null và thay thế bằng 0 nếu null
 
                 var dailyEntrySlips = entrySlips
                     .Where(x => x.createDate.Value.Date == date)
-                    .Sum(x => x.total.GetValueOrDefault());
+                    .Sum(x => x.total.HasValue ? x.total.Value : 0);  // Sử dụng HasValue để kiểm tra null và thay thế bằng 0 nếu null
 
                 if (dailyInvoices > 0 || dailyEntrySlips > 0)
                 {
                     DataRow dr = tb.NewRow();
                     dr["date"] = date.ToShortDateString();
-                    dr["invoice"] = Support.convertVND(dailyInvoices); 
+                    dr["invoice"] = Support.convertVND(dailyInvoices);
                     dr["entrySlip"] = Support.convertVND(dailyEntrySlips);
                     dr["profit"] = Support.convertVND(dailyInvoices - dailyEntrySlips);
                     tb.Rows.Add(dr);
@@ -67,6 +67,5 @@ namespace BUS
             gc.DataSource = tb;
             return tb;
         }
-
     }
 }

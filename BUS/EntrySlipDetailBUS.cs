@@ -31,7 +31,7 @@ namespace BUS
 
         public static List<EntrySlipDetail> GetDataGV(int entrySlipId)
         {
-            
+
             foreach (var item in db.EntrySlipDetails)
             {
                 db.Entry(item).Reload();  // Làm mới từng đối tượng
@@ -57,9 +57,19 @@ namespace BUS
             {
                 db.EntrySlipDetails.Add(model);
                 db.SaveChanges();
+
+                // Tăng quantity trong Product
+                var product = db.Products.SingleOrDefault(x => x.id == model.productId);
+                if (product != null)
+                {
+                    product.quantity += model.quantity;
+                    db.SaveChanges();
+                }
+
                 return 1;
             }
         }
+
 
         public static int Update(EntrySlipDetail model)
         {
@@ -85,10 +95,21 @@ namespace BUS
             var model = db.EntrySlipDetails.FirstOrDefault(x => x.id == id);
             if (model == null)
                 return -1;
+
+            // Giảm quantity trong Product
+            var product = db.Products.SingleOrDefault(x => x.id == model.productId);
+            if (product != null)
+            {
+                product.quantity -= model.quantity;
+                if (product.quantity < 0)
+                    product.quantity = 0; // Đảm bảo không âm
+            }
+
             db.EntrySlipDetails.Remove(model);
             db.SaveChanges();
             return 1;
         }
+
 
         public static bool IsProduct(int productId)
         {

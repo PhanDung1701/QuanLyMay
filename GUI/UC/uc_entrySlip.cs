@@ -83,30 +83,46 @@ namespace GUI.UC
         {
             try
             {
+                // Check if a supplier is selected
+                if (lkSupplier.EditValue == null)
+                {
+                    XtraMessageBox.Show("Bạn chưa chọn nhà cung cấp", "Thông báo");
+                    return;
+                }
+
                 var supplierId = int.Parse(lkSupplier.EditValue.ToString());
                 var model = new EntrySlip
                 {
-                    staffId = frm.staff.id,
+                    staffId = frm.staff.id, // Ensure frm.staff and frm.staff.id are not null
                     createDate = DateTime.Now,
                     isPay = false,
                     supplierId = supplierId,
                 };
+
                 int i = EntrySlipBUS.Insert(model);
                 if (i != -1)
                 {
                     XtraMessageBox.Show("Tạo phiếu nhập thành công.", "Thông báo");
                     EntrySlipBUS.GetDataGV(gcImport, false);
                     gvImport.FocusedRowHandle = gvImport.RowCount - 1;
-                    callDataGVImportDetail(EntrySlipBUS.GetLast().id, supplierId);
+
+                    var lastEntrySlip = EntrySlipBUS.GetLast();
+                    if (lastEntrySlip != null)
+                    {
+                        callDataGVImportDetail(lastEntrySlip.id, supplierId);
+                    }
+                    else
+                    {
+                        XtraMessageBox.Show("Không thể lấy phiếu nhập cuối.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
             }
             catch (Exception ex)
             {
-
-                XtraMessageBox.Show("Bạn chưa chọn nhà cung cấp", "Thông báo");
+                XtraMessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
+
         //huỷ 1 phiếu trong gridview nhập kho
         private void destroyImport()
         {

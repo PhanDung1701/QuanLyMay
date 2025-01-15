@@ -48,12 +48,13 @@ namespace BUS
             {
                 // Tính toán quantity và remate
                 var category = db.Categories.SingleOrDefault(x => x.id == model.categoryId);
+                
                 if (category != null && category.quantity_unit.HasValue && model.requimate.HasValue)
                 {
                     model.quantity = model.requimate / category.quantity_unit;
                     model.remate = model.requimate % category.quantity_unit;
                 }
-
+                ClearCache(db);
                 db.Products.Add(model);
                 db.SaveChanges();
                 return 1;
@@ -70,6 +71,7 @@ namespace BUS
             var modelUpdate = db.Products.SingleOrDefault(x => x.id == model.id);
             try
             {
+
                 if (modelUpdate == null)
                     return -1;
 
@@ -92,7 +94,7 @@ namespace BUS
                 modelUpdate.requimate = model.requimate;
                 modelUpdate.quantity = model.quantity;
                 modelUpdate.remate = model.remate;
-
+                ClearCache(db);
                 db.SaveChanges();
                 return 1;
             }

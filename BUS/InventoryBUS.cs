@@ -70,23 +70,33 @@ namespace BUS
 
         private static void loadTotalEntrySlipAndInvoice(List<ItemInventory> lstItemInventory, List<EntrySlip> lstImportTemp, List<Invoice> lstOrderTemp)
         {
-            //tính tổng số lượng nhập của 1 linh kiện trong 1 ngày
+            // Tính tổng số lượng nhập của 1 linh kiện trong 1 ngày
             foreach (var import in lstImportTemp)
             {
-                for (int i = 0; i < lstItemInventory.Count; i++)
+                var entrySlipDetails = db.EntrySlipDetails.Where(x => x.entrySlipId == import.id).ToList();
+                foreach (var importDetail in entrySlipDetails)
                 {
-                    int quantityEntrySlip = db.EntrySlipDetails.Where(x => x.entrySlipId == import.id && x.productId == lstItemInventory[i].ProductId).Sum(x => x.quantity) ?? 0;
-                    lstItemInventory[i].QuantityEntrySlip += quantityEntrySlip;
+                    var inventoryItem = lstItemInventory.FirstOrDefault(x => x.ProductId == importDetail.productId);
+                    if (inventoryItem != null)
+                    {
+                        int quantityEntrySlip = db.EntrySlipDetails.Where(x => x.entrySlipId == import.id && x.productId == inventoryItem.ProductId).Sum(x => x.quantity) ?? 0;
+                        inventoryItem.QuantityEntrySlip += quantityEntrySlip;
+                    }
                 }
             }
-            //tính tổng số lượng bán của 1 linh kiện trong 1 ngày
 
+            // Tính tổng số lượng bán của 1 linh kiện trong 1 ngày
             foreach (var order in lstOrderTemp)
             {
-                for (int i = 0; i < lstItemInventory.Count; i++)
+                var invoiceDetails = db.InvoiceDetails.Where(x => x.invoiceId == order.id).ToList();
+                foreach (var orderDetail in invoiceDetails)
                 {
-                    int quantityInvoice = db.InvoiceDetails.Where(x => x.invoiceId == order.id && x.productId == lstItemInventory[i].ProductId).Sum(x => x.quantity) ?? 0;
-                    lstItemInventory[i].QuantityInvoice += quantityInvoice;
+                    var inventoryItem = lstItemInventory.FirstOrDefault(x => x.ProductId == orderDetail.productId);
+                    if (inventoryItem != null)
+                    {
+                        int quantityInvoice = db.InvoiceDetails.Where(x => x.invoiceId == order.id && x.productId == inventoryItem.ProductId).Sum(x => x.quantity) ?? 0;
+                        inventoryItem.QuantityInvoice += quantityInvoice;
+                    }
                 }
             }
         }
